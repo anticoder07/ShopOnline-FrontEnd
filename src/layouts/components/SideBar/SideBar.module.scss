@@ -1,0 +1,21 @@
+.wrapper{
+  // position: absolute;
+  // left: 0px;
+  height: 100vh;
+  width: 240px;
+  // background-color: var(--background-header);
+  // border-right: 1px solid black;
+  // box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+
+  // background-color: rgba(114, 114, 114, 0.5);
+  .logo{
+    font-size: 1.8rem;
+    margin: 3px 0px 0px 5px;
+    cursor: pointer;
+  }
+}
+
+.sideBar-items{
+  margin: 10px 20px 10px 20px;
+  font-size: 1.4rem;
+}

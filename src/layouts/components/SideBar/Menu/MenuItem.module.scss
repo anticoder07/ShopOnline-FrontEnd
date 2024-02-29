@@ -1,0 +1,27 @@
+.menu-item{
+  width: 220px;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: var(--black);
+  padding: 5px 0px;
+  font-weight: 400;
+  font-size: 1.6rem;
+
+  .title{
+    padding: 0px 10px;
+  }
+
+  .icon{
+    padding-left: 10px;
+  }
+
+  &:hover{
+    // border: 1px solid var(--black);
+    // border-right: 1px solid white;
+    // border-top-left-radius: 3px;
+    // border-bottom-left-radius: 3px;
+    // background-color: rgba(240, 237, 237, 0.781);
+    outline: none;
+  }
+}

@@ -1,0 +1,29 @@
+.avatar{
+  width: 35px;
+  height: 35px;
+  object-fit: cover;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.squareSmall{
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+}
+
+.sideBarPost{
+  width: 200px;
+  height: 400px;
+  margin-top: 20px ;
+  margin-left: 9px;
+  object-fit: cover;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.card{
+  width: 187px;
+  height: 187px;
+  object-fit: cover;
+}

@@ -7,8 +7,14 @@
 .container{
   display: flex;
   flex-direction: row;
+  position: relative;
+}
+
+.sideBar-wrapper{
 }
 
 .content{
-  flex: 1;
+  // position: relative;
+  top: 0px;
+  // flex: 1;
 }

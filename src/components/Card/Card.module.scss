@@ -1,0 +1,64 @@
+.wrapper{
+  width: 190px;
+  height: 294px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 0.3px solid rgb(113, 113, 113);
+  background-color: white;
+  margin: 10px;
+  cursor: pointer;
+
+  &:hover{
+    border: 1.5px solid rgb(105, 98, 98);
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;  
+  }
+}
+
+
+.info-wrapper{
+  display: flex;
+  flex-direction: column;
+  width: 190px;
+  height: 102px;
+  padding: 8px;
+  
+  .title{
+    font-size: 1.3rem;
+    font-weight: 400;
+    width: 171px;
+    height: 40px;
+  }
+  
+  .promotion{
+    height: 16px;
+    .promotion-info{
+      padding: 2px;
+      font-weight: 400;
+      border: 0.1px solid rgb(255, 45, 45);
+      color:  rgb(255, 45, 45);
+      margin-bottom: 8px;
+    }
+
+  }
+
+  .information-product{
+    display: flex;
+    justify-content: space-between;
+
+    .price{
+      color: rgba(238, 77, 45);
+      font-size: 1.8rem;
+      position: relative;
+      bottom: -5px;
+    }
+    
+    .sold{
+      font-weight: 400;
+      font-size: 1.2rem;
+      position: relative;
+      bottom: -10px;
+    } 
+  }
+  
+}

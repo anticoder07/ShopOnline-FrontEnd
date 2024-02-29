@@ -2,10 +2,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
 :root{
+  --default-width-search-wrapper: 0px;
+  --default-height-header: 60px;
+  --default-width-search: 500px;
+  --default-height-search: 35px;
 
+
+  --white: rgb(255, 255, 255);
+  --black: rgb(0, 0, 0);
+  --primary: rgb(254, 44, 85);
+  --color-notification: rgb(255, 0, 0);
+  --color-separate: rgba(22, 24, 35, 0.1);
+  // --background-header: rgb(251,84,49);
+  --background-header: rgb(59, 59, 59);
+
+  --color-focus-boder-search: rgba(22, 24, 35, 0.2);
+  --color-line-space: rgba(255, 255, 255, 0.4);
+  --color-hover-default: rgba(255, 255, 255, 0.06);
 }
 
 *{
+  padding: 0;
+  margin: 0;
   box-sizing: border-box;
 }
 
