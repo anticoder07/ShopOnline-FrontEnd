@@ -3,26 +3,29 @@ import classNames from "classnames/bind";
 
 import styles from "./Card.module.scss";
 import Image from "../Image";
-import images from "../../assets/images";
 
 const cx = classNames.bind(styles);
 
-function Card() {
+function Card({ data }) {
   return (
     <div className={cx("wrapper")}>
       <div className={cx("logo")}>
-        <Image src={images.iphone} alt="product" card />
+        <Image src={data.logo} alt="product" card />
       </div>
       <div className={cx("info-wrapper")}>
-        <span className={cx("title")}>
-          Sản phẩm này dởm đừng mua làm gì cho tốn tiền
-        </span>
+        <span className={cx("title")}>{data.title}</span>
         <div className={cx("promotion")}>
-          <span className={cx("promotion-info")}>Đang bán chạy</span>
+          {data.promotion.length > 0 ? (
+            <>
+              <span className={cx("promotion-info")}>{data.promotion}</span>
+            </>
+          ) : (
+            <></>
+          )}
         </div>
         <div className={cx("information-product")}>
-          <span className={cx("price")}>10.000VND</span>
-          <span className={cx("sold")}>Đã bán 10</span>
+          <span className={cx("price")}>{data.price}VND</span>
+          <span className={cx("sold")}>Đã bán {data.sold}</span>
         </div>
       </div>
     </div>

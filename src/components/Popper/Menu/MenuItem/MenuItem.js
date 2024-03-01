@@ -22,7 +22,7 @@ function MenuItem({ data, onClick }) {
       leftIcon={data.icon}
       onClick={onClick}
       defaultHover
-      style={{ padding: "10px" }}
+      style={{ padding: "10px", width: "150px" }}
     >
       {data.title}
     </Button>

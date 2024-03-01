@@ -6,6 +6,10 @@
   color: var(--black);
 
   &.separate {
-    border-top: 1px solid var(--black);
+    border-top: 0.8px solid var(--color-separate);
   }
-}
+
+  &:hover{
+    background-color: rgba(22, 24, 35, 0.04);
+  }
+} 

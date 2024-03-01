@@ -1,4 +1,5 @@
 .wrapper{ 
+  position: fixed;
   width: 100%;
   height: calc(var(--default-height-header) + 20);
   display: flex;
@@ -16,7 +17,8 @@
     justify-content: space-around;
   }
 
-  .title{
+  .header-indexing{
+    display: flex;
     width: 100%;
     padding-top: 8px;
     background: white;
@@ -36,10 +38,6 @@
   }
 }
 
-.title{
-  display: flex;
-}
-
 .action{
   min-width: 220px;
   display: flex;
@@ -53,10 +51,21 @@
 }
 
 .custom-tooltip{
-  background-color: #333;
+  background-color: #4b4949;
   color: aliceblue;
   font-weight: 500;
   border-radius: 5px;
   padding: 8px;
   font-size: 14px;
+
+  &::after {
+    content: " ";
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent #4b4949  transparent;
+  }
 }

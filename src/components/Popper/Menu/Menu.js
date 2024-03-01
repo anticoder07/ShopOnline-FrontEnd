@@ -35,7 +35,7 @@ function Menu({ items = [], visible = false, placement, className, children }) {
   return (
     <Comp
       interactive
-      delay={[0, 600]}
+      delay={[0, 500]}
       render={renderResult}
       className={classes}
       placement={placement}

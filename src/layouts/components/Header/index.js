@@ -14,17 +14,22 @@ import styles from "./Header.module.scss";
 import Search from "../Search";
 import Image from "../../../components/Image";
 import Menu from "../../../components/Popper/Menu/Menu";
-import { Link } from "react-router-dom";
-import images from "../../../assets/images";
 import MenuItem from "../SideBar/Menu/MenuItem";
 
 const cx = classNames.bind(styles);
 
 function Header() {
+  const currentUser = true;
+
   const USER_ITEMS = [
     {
       icon: <FontAwesomeIcon icon={faUser} />,
       title: "Profile",
+      to: "/hello",
+    },
+    {
+      icon: <FontAwesomeIcon icon={faClipboardList} />,
+      title: "Basket",
       to: "/hello",
     },
     {
@@ -38,23 +43,23 @@ function Header() {
   const SIDEBAR_ITEMS = [
     {
       title: "Điện thoại - Phụ kiện ",
-      to: "",
+      to: "/",
     },
     {
       title: "Máy tính - Laptop",
-      to: "",
+      to: "/",
     },
     {
       title: "Mỹ phẩm chính hãng",
-      to: "",
+      to: "/",
     },
     {
       title: "Thời trang nam nữ",
-      to: "",
+      to: "/",
     },
     {
       title: "Sản phẩm khác",
-      to: "",
+      to: "/",
     },
   ];
 
@@ -79,26 +84,63 @@ function Header() {
         <Search />
 
         <div className={cx("action")}>
-          <div className={cx("action-item")}>
-            <Tippy content="Có thông báo mới" className={cx("custom-tooltip")}>
-              <Button href={"/"} text white large notificationDot={"."}>
-                <FontAwesomeIcon icon={faClipboardList} />
+          {currentUser ? (
+            <>
+              <div className={cx("action-item")}>
+                <Tippy
+                  content="Có thông báo mới"
+                  className={cx("custom-tooltip")}
+                >
+                  <Button href={"/"} text white large notificationDot={"."}>
+                    <FontAwesomeIcon icon={faClipboardList} />
+                  </Button>
+                </Tippy>
+              </div>
+              <div className={cx("action-item")}>
+                <Tippy content="2 Sản phẩm" className={cx("custom-tooltip")}>
+                  <Button href={"/"} text white large notificationNumber={"2"}>
+                    <FontAwesomeIcon icon={faCartShopping} />
+                  </Button>
+                </Tippy>
+              </div>
+              <Menu items={USER_ITEMS}>
+                <Image src="/" alt="avatar" avatar />
+              </Menu>
+            </>
+          ) : (
+            <div
+              style={{
+                position: "relative",
+                right: "-65px",
+              }}
+            >
+              <Button
+                to="/"
+                text
+                style={{
+                  padding: "3px 20px",
+                  color: "white",
+                  fontSize: "1.7rem",
+                }}
+              >
+                Sign Up
               </Button>
-            </Tippy>
-          </div>
-          <div className={cx("action-item")}>
-            <Tippy content="2 Sản phẩm" className={cx("custom-tooltip")}>
-              <Button href={"/"} text white large notificationNumber={"2"}>
-                <FontAwesomeIcon icon={faCartShopping} />
+              <Button
+                to="/"
+                text
+                style={{
+                  padding: "3px 20px",
+                  color: "white",
+                  fontSize: "1.7rem",
+                }}
+              >
+                Log In
               </Button>
-            </Tippy>
-          </div>
-          <Menu items={USER_ITEMS}>
-            <Image src="/" alt="avatar" avatar />
-          </Menu>
+            </div>
+          )}
         </div>
       </div>
-      <div className={cx("title")}>{renderItem()}</div>
+      <div className={cx("header-indexing")}>{renderItem()}</div>
     </header>
   );
 }

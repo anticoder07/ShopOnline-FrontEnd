@@ -18,6 +18,8 @@ const Button = forwardRef(
       small = false,
       large = false,
       defaultHover = false,
+      primary = false,
+      whiteBasic = false,
       notificationDot,
       notificationNumber,
       children,
@@ -56,6 +58,8 @@ const Button = forwardRef(
 
     const classes = cx("wrapper", {
       [className]: className,
+      whiteBasic,
+      primary,
       defaultHover,
       disabled,
       text,
