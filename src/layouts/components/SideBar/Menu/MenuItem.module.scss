@@ -20,4 +20,13 @@
     color: red;
     outline: none;
   }
+
+  .activeIcon {
+    display: none;
+  }
+
+  &.active {
+    color: rgb(255, 0, 0);
+  }
+
 }

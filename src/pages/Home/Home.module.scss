@@ -1,10 +1,20 @@
 .wrapper {
   margin-top: 5px;
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
-  // align-items: center;
-  justify-content: center;
+  align-items: center;
   background-color: rgb(245,245,245);
   min-height: 100vh;
-  min-width: calc(100vw - 15px); 
+  min-width: calc(100vw - 15px);
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.pagination {
+  margin: 15px 0px 20px 0px;
 }

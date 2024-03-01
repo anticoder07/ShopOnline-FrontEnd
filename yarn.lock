@@ -7945,7 +7945,7 @@ prompts@^2.0.1, prompts@^2.4.2:
     kleur "^3.0.3"
     sisteransi "^1.0.5"
 
-prop-types@^15.8.1:
+prop-types@^15.6.2, prop-types@^15.8.1:
   version "15.8.1"
   resolved "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
@@ -8175,12 +8175,28 @@ react-tippy@^1.4.0:
   dependencies:
     popper.js "^1.11.1"
 
-react@^18.0.0, react@^18.2.0, "react@>= 16", react@>=16.3, react@>=16.8:
+"react@^16.8.0 || ^17.0.0 || ^18.0.0", react@^18.0.0, react@^18.2.0, "react@>= 16", react@>=16.3, react@>=16.8:
   version "18.2.0"
   resolved "https://registry.npmjs.org/react/-/react-18.2.0.tgz"
   integrity sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==
   dependencies:
     loose-envify "^1.1.0"
+
+react@^16.8.6:
+  version "16.14.0"
+  resolved "https://registry.npmjs.org/react/-/react-16.14.0.tgz"
+  integrity sha512-0X2CImDkJGApiAlcf0ODKIneSwBPhqJawOa5wCtKbu7ZECrmS26NvtSILynQ66cgkT/RJ4LidJOc3bUESwmU8g==
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    prop-types "^15.6.2"
+
+reactn@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/reactn/-/reactn-1.0.0.tgz"
+  integrity sha512-6i0KHxHZsIz3XNOHZe9LErrYMXMrADfAGzgNS3+Hd+BFTocJJb4f8myIZOvXCkrDGW0ALpqPnLjrFFwBUdmimA==
+  dependencies:
+    use-force-update "^1.0.0"
 
 read-cache@^1.0.0:
   version "1.0.0"
@@ -9546,6 +9562,19 @@ url-parse@^1.5.3:
   dependencies:
     querystringify "^2.1.1"
     requires-port "^1.0.0"
+
+use-force-update@^1.0.0:
+  version "1.0.11"
+  resolved "https://registry.npmjs.org/use-force-update/-/use-force-update-1.0.11.tgz"
+  integrity sha512-h4SICYgTJHon8w9dFIqdqR1Vrzdgl4YaRfRwhmAh01kBGljzTICanyfaFU8C4etuEfRdYpE+04XX2ZrEhOWKXQ==
+
+use-history@^1.4.1:
+  version "1.4.1"
+  resolved "https://registry.npmjs.org/use-history/-/use-history-1.4.1.tgz"
+  integrity sha512-uY12M/GI4c2AW/YR/1SLrveP407kLJnsvH42787QeT5PvVB5/TI1SJrPmTreC2dPMjeEywSAeqsXTqRMHl7F9Q==
+  dependencies:
+    react "^16.8.6"
+    reactn "^1.0.0"
 
 util-deprecate@^1.0.1, util-deprecate@^1.0.2, util-deprecate@~1.0.1:
   version "1.0.2"

@@ -1,0 +1,26 @@
+.pagination-wrapper{
+  font-size: 25px;
+  margin-bottom: 10px;
+ 
+
+  & > *{
+    font-weight: 400;
+    color: #575656;
+    padding: 2px 10px;
+    margin: 0px 10px;
+    user-select: none;
+    cursor: pointer;
+  }
+
+}
+
+.active{
+  background-color: #ff0000;
+  border-radius: 2px;
+  color: white
+}
+
+.arrow{
+  font-size: 1.9rem;
+  margin-bottom: 5px;
+}

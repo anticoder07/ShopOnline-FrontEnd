@@ -1,0 +1,132 @@
+.wrapper{
+  display: flex;
+  flex-direction: column;
+  // background-color: rgb(211, 206, 206);
+  align-content: space-between;
+  margin-top: 10px;
+  width: 1200px;
+  height: 480px;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+
+  .information-product{
+    display: flex;
+     height: 450px;
+
+    .information{
+      width: 780px;
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}
+
+.picture{
+  padding: 15px;
+}
+
+.title{
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 24px;
+  // max-height: 48px;
+  // max-width: 665px;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  vertical-align: sub;
+  padding: 15px 0px;
+}
+
+.sold, .numberOfProduct{
+  font-weight: 400;
+  font-size: 1.4rem;
+  color: #333;
+}
+
+.sold{
+  padding-bottom: 10px;
+  display: flex;
+}
+
+.sold-number{
+  font-weight: 500;
+  font-size: 1.4rem;
+  margin: 0px 4px;
+  color: black;
+}
+
+.total{
+  font-size: 24px;
+  width: 700px;
+  color: #d0011b;
+  background: #fafafa;
+  padding: 15px 20px;
+  margin-bottom: 25px;
+}
+
+.description{
+  margin-top: 30px;
+  color: rgba(0, 0, 0, .8);
+  font-size: 1.875rem;
+  line-height: 1.7;
+  font-weight: 400;
+  padding: 15px;
+  width: 993px;
+  background-color: white;
+  border-radius: 5px;
+}
+
+.buttonAddCart{
+  padding: 13px 40px;
+  border: 0.5px solid red;
+  background-color: rgb(240, 233, 233);
+  border-radius: 3px;
+  color: red;
+}
+
+.buttonTypeProduct{
+  padding: 9px 20px;
+  color: black;
+  border: 0.6px solid black;
+  background-color: #fafafa;
+
+  &:hover{
+    border: 0.6px solid black;
+  }
+}
+
+.quantity{
+  display: flex;
+  align-items: center;
+  margin-bottom: 25px;
+  position: relative;
+  bottom: -155px;
+
+  .numberOfProduct{
+    margin-left: 20px;
+  }
+}
+
+.type{
+  margin-bottom: 25px;
+  display: flex;
+  align-items: center;
+}
+
+.action{
+  position: relative;
+  bottom: -140px;
+}
+
+.title-text{
+  width: 110px;
+  color: #757575;
+  flex-shrink: 0;
+  font-size: 1.7rem;
+  font-weight: 400;
+}
+
+.quantity-comp{
+  // margin-left: 10px;
+}

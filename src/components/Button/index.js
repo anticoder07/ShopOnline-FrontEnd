@@ -1,5 +1,6 @@
 import React, { forwardRef } from "react";
 import classNames from "classnames/bind";
+import { Link } from "react-router-dom";
 
 import styles from "./Button.module.scss";
 
@@ -48,7 +49,7 @@ const Button = forwardRef(
 
     if (to) {
       props["to"] = to;
-      Component = "Link";
+      Component = Link;
     } else if (href) {
       props["href"] = href;
       Component = "a";

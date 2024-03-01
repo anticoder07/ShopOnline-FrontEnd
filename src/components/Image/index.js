@@ -17,6 +17,7 @@ const Image = forwardRef(
       squareSmall = false,
       sideBarPost = false,
       card = false,
+      pictureProduct = false,
       ...props
     },
     ref
@@ -33,6 +34,7 @@ const Image = forwardRef(
       squareSmall,
       sideBarPost,
       card,
+      pictureProduct,
     });
 
     return (

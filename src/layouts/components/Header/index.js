@@ -25,48 +25,48 @@ function Header() {
     {
       icon: <FontAwesomeIcon icon={faUser} />,
       title: "Profile",
-      to: "/hello",
+      to: "/profile",
     },
     {
       icon: <FontAwesomeIcon icon={faClipboardList} />,
       title: "Basket",
-      to: "/hello",
+      to: "/gio-hang",
     },
     {
       icon: <FontAwesomeIcon icon={faArrowRightFromBracket} />,
       title: "Log out",
-      to: "/helo",
+      to: "/trang-chu",
       separate: true,
     },
   ];
 
   const SIDEBAR_ITEMS = [
     {
-      title: "Điện thoại - Phụ kiện ",
-      to: "/",
+      title: "Điện thoại - Phụ kiện",
+      to: "/dien-thoai-phu-kien",
     },
     {
       title: "Máy tính - Laptop",
-      to: "/",
+      to: "/may-tinh-laptop",
     },
     {
       title: "Mỹ phẩm chính hãng",
-      to: "/",
+      to: "/my-pham",
     },
     {
       title: "Thời trang nam nữ",
-      to: "/",
+      to: "/thoi-trang",
     },
     {
       title: "Sản phẩm khác",
-      to: "/",
+      to: "/other",
     },
   ];
 
   const renderItem = () => {
     return SIDEBAR_ITEMS.map((item, index) => (
       <div className={cx("sidebar-item")} key={index}>
-        <MenuItem title={item.title} to={item.toNav} icon={item.icon} />
+        <MenuItem title={item.title} to={item.to} icon={item.icon} />
       </div>
     ));
   };

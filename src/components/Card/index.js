@@ -3,12 +3,13 @@ import classNames from "classnames/bind";
 
 import styles from "./Card.module.scss";
 import Image from "../Image";
+import { NavLink } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 
 function Card({ data }) {
   return (
-    <div className={cx("wrapper")}>
+    <NavLink to={data.to} className={cx("wrapper", "navlink-wrapper")}>
       <div className={cx("logo")}>
         <Image src={data.logo} alt="product" card />
       </div>
@@ -28,7 +29,7 @@ function Card({ data }) {
           <span className={cx("sold")}>Đã bán {data.sold}</span>
         </div>
       </div>
-    </div>
+    </NavLink>
   );
 }
 
