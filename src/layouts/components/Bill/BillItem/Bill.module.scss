@@ -1,0 +1,54 @@
+.wrapper{
+  display: flex;
+  justify-content: space-between;
+  height: 82px;
+  margin: 10px 0px;
+  background-color: aliceblue;
+  .product{
+    display: flex;
+    .picture{
+      margin: 0px 10px;
+    }
+  
+    .information{
+    
+    }
+  }
+}
+
+
+
+.title{
+  font-size: 17px;
+  line-height: 22px;
+  font-weight: 500;
+  margin: 0px 0px 5px 0px;
+  max-height: 48px;
+}
+
+.type{
+  color: rgba(0, 0, 0, 0.54);
+  font-size: 12px;
+  font-weight: 500;
+  margin: 0px 0px 5px 0px;
+
+}
+
+.quantity{
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.total{
+  margin: auto 0;
+  margin-right: 10px;
+  font-size: 1.6rem;
+  font-weight: 500;
+}
+
+.check{
+  margin: auto;
+  margin-left: 10px;
+  width: 17px;
+  height: 17px;
+}

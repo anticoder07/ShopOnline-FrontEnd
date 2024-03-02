@@ -9,6 +9,14 @@
 .squareSmall{
   width: 35px;
   height: 35px;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.squareLarge{
+  width: 82px;
+  height: 82px;
+  object-fit: cover;
   cursor: pointer;
 }
 
@@ -31,5 +39,11 @@
 .pictureProduct{
   width: 450px;
   height: 450px;
+  object-fit: cover;
+}
+
+.squareTypeOption{
+  width: 24px;
+  height: 24px;
   object-fit: cover;
 }

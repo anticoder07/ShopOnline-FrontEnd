@@ -1,18 +1,17 @@
 .wrapper{
   display: flex;
   flex-direction: column;
-  // background-color: rgb(211, 206, 206);
   align-content: space-between;
   margin-top: 10px;
   width: 1200px;
-  height: 480px;
+  min-height: 480px;
   background-color: white;
   border-radius: 5px;
   box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
 
   .information-product{
     display: flex;
-     height: 450px;
+    height: 450px;
 
     .information{
       width: 780px;
@@ -30,30 +29,7 @@
   font-size: 24px;
   font-weight: 500;
   line-height: 24px;
-  // max-height: 48px;
-  // max-width: 665px;
-  overflow: hidden;
-  overflow-wrap: break-word;
-  vertical-align: sub;
   padding: 15px 0px;
-}
-
-.sold, .numberOfProduct{
-  font-weight: 400;
-  font-size: 1.4rem;
-  color: #333;
-}
-
-.sold{
-  padding-bottom: 10px;
-  display: flex;
-}
-
-.sold-number{
-  font-weight: 500;
-  font-size: 1.4rem;
-  margin: 0px 4px;
-  color: black;
 }
 
 .total{
@@ -65,16 +41,22 @@
   margin-bottom: 25px;
 }
 
-.description{
-  margin-top: 30px;
-  color: rgba(0, 0, 0, .8);
-  font-size: 1.875rem;
-  line-height: 1.7;
-  font-weight: 400;
-  padding: 15px;
-  width: 993px;
-  background-color: white;
-  border-radius: 5px;
+.quantity{
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 10px;
+
+  .title-text{
+    width: 110px;
+    color: #757575;
+    font-size: 1.4rem;
+    font-weight: 400;
+  }
+
+  .quantity-item{
+    margin-right: 10px;
+  }
 }
 
 .buttonAddCart{
@@ -85,48 +67,33 @@
   color: red;
 }
 
-.buttonTypeProduct{
-  padding: 9px 20px;
-  color: black;
-  border: 0.6px solid black;
-  background-color: #fafafa;
-
-  &:hover{
-    border: 0.6px solid black;
-  }
-}
-
-.quantity{
-  display: flex;
-  align-items: center;
-  margin-bottom: 25px;
-  position: relative;
-  bottom: -155px;
-
-  .numberOfProduct{
-    margin-left: 20px;
-  }
-}
-
-.type{
-  margin-bottom: 25px;
-  display: flex;
-  align-items: center;
-}
-
-.action{
-  position: relative;
-  bottom: -140px;
-}
-
-.title-text{
-  width: 110px;
-  color: #757575;
-  flex-shrink: 0;
-  font-size: 1.7rem;
+.description{
+  margin-top: 30px;
+  color: rgba(0, 0, 0, .8);
+  font-size: 1.875rem;
+  line-height: 1.7;
   font-weight: 400;
+  padding: 15px;
+  // width: 993px;
+  width: 1200px;
+
+  background-color: white;
+  border-radius: 5px;
+
+  .description-title{
+    font-size: 26px;
+    background-color: #f1f1f1;
+    padding-left: 20px;
+    margin-bottom: 30px;
+  }
 }
 
-.quantity-comp{
-  // margin-left: 10px;
+.recommend{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 1200px;
+  border-radius: 5px;
+
 }
+

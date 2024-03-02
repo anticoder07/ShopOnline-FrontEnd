@@ -91,14 +91,26 @@ function Header() {
                   content="Có thông báo mới"
                   className={cx("custom-tooltip")}
                 >
-                  <Button href={"/"} text white large notificationDot={"."}>
+                  <Button
+                    href={"/thong-tin-don-hang"}
+                    text
+                    white
+                    large
+                    notificationDot={"."}
+                  >
                     <FontAwesomeIcon icon={faClipboardList} />
                   </Button>
                 </Tippy>
               </div>
               <div className={cx("action-item")}>
                 <Tippy content="2 Sản phẩm" className={cx("custom-tooltip")}>
-                  <Button href={"/"} text white large notificationNumber={"2"}>
+                  <Button
+                    href={"/gio-hang"}
+                    text
+                    white
+                    large
+                    notificationNumber={"2"}
+                  >
                     <FontAwesomeIcon icon={faCartShopping} />
                   </Button>
                 </Tippy>

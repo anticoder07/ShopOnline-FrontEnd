@@ -37,3 +37,24 @@
 
   cursor: pointer;
 }
+
+.gray{
+  width: 100%;
+  position: relative;
+  left: 25px;
+  .search-wrapper{
+    margin: auto;
+    border-radius: 100px;
+    .search-input{
+      border-radius: 50px;
+      background-color: #cfcfcf;
+      padding-left: 10px;
+    }
+  }
+  .search-btn{
+    background: none;
+    color: rgb(255, 255, 255);
+    font-size: 20px;
+    left: -220px;
+  }
+}

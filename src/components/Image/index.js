@@ -15,9 +15,11 @@ const Image = forwardRef(
       fallBack: customFallBack = images.noImage,
       avatar = false,
       squareSmall = false,
+      squareLarge = false,
       sideBarPost = false,
       card = false,
       pictureProduct = false,
+      squareTypeOption = false,
       ...props
     },
     ref
@@ -32,9 +34,11 @@ const Image = forwardRef(
       [className]: className,
       avatar,
       squareSmall,
+      squareLarge,
       sideBarPost,
       card,
       pictureProduct,
+      squareTypeOption,
     });
 
     return (

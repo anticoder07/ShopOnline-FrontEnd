@@ -1,0 +1,60 @@
+.wrapper{
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+  padding-bottom: 10px;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--white);
+  border-radius: 10px;
+  width: 885px;
+}
+
+.basket-header{
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.basket-content{
+  width: 100%;
+}
+
+.status{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.total{
+  margin: 0px 20px 10px 20px;
+  font-size: 20px;
+  cursor: default;
+}
+
+.basket-content{
+  margin-top: 20px;
+  background-color: white;
+  border-radius: 10px;
+
+  cursor: pointer;
+}
+
+.title{
+  font-size: 30px;
+  margin: 10px 0px;
+}
+
+.select-all{
+  display: flex;
+  align-items: center;
+  padding-top: 10px;
+  margin-left: 10px;
+  font-size: 20px;
+  color: red;
+
+  .select-all-btn{
+    width: 17px;
+    height: 17px;
+    margin-right: 10px;
+  }
+}

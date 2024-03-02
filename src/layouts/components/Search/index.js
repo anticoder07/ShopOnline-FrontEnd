@@ -8,15 +8,19 @@ import styles from "./Search.module.scss";
 
 const cx = classNames.bind(styles);
 
-function Search() {
+function Search({ placeholder = "Tìm Kiếm", gray = false }) {
+  const classes = cx("wrapper", {
+    gray,
+  });
+
   return (
     <HeadlessTippy>
-      <div className={cx("wrapper")}>
+      <div className={classes}>
         <div className={cx("search-wrapper")}>
           <input
             type="text"
             className={cx("search-input")}
-            placeholder="Tìm Kiếm"
+            placeholder={placeholder}
             spellCheck={false}
           />
         </div>
