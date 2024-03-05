@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from "react";
+import React, { forwardRef, useEffect, useState } from "react";
 import classNames from "classnames/bind";
 
 import images from "../../assets/images";
@@ -14,6 +14,7 @@ const Image = forwardRef(
       className,
       fallBack: customFallBack = images.noImage,
       avatar = false,
+      avatarBig = false,
       squareSmall = false,
       squareLarge = false,
       sideBarPost = false,
@@ -33,6 +34,7 @@ const Image = forwardRef(
     const classes = cx({
       [className]: className,
       avatar,
+      avatarBig,
       squareSmall,
       squareLarge,
       sideBarPost,

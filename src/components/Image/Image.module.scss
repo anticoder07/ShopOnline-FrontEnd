@@ -47,3 +47,12 @@
   height: 24px;
   object-fit: cover;
 }
+
+.avatarBig{
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid rgb(255, 255, 255);
+  cursor: pointer
+}

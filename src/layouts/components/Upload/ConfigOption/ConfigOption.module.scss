@@ -1,0 +1,49 @@
+.wrapper{
+  display: flex;
+}
+
+.take-picture-option{
+  position: relative;
+  margin: auto 0;
+  right: 10px;
+  font-size: 25px;
+  margin-left: 20px;
+  cursor: pointer;
+}
+
+.preview-option{
+  width: 42px;
+  height: 42px; 
+  box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px;
+}
+
+.option-input, .save-btn{
+  height: 30px;
+  margin-right: 10px;
+}
+.preview-option-wrapper{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  top: -5px;
+  margin-right: 10px;
+
+  .preview-option-close{
+    margin-top: 5px;
+    position: relative;
+    font-size: 14px;
+    color: orangered;
+    cursor: pointer;
+  }
+}
+
+.save-btn{
+  padding: 5px 20px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.option-wrapper{
+  margin: 20px 0px;
+}

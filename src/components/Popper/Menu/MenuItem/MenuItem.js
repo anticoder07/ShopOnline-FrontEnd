@@ -15,8 +15,6 @@ function MenuItem({ data, onClick }) {
     { color: data.isActive ? "greenyellow" : "white" }
   );
 
-  console.log(data.to);
-
   return (
     <Button
       className={classes}

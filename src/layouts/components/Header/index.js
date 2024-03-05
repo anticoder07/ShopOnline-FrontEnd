@@ -5,6 +5,8 @@ import {
   faArrowRightFromBracket,
   faCartShopping,
   faClipboardList,
+  faCloudArrowUp,
+  faRectangleList,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import Tippy from "@tippyjs/react";
@@ -18,8 +20,9 @@ import MenuItem from "../SideBar/Menu/MenuItem";
 
 const cx = classNames.bind(styles);
 
-function Header() {
+function Header({ visibleHeaderIndexing = true, visibleSearch = true }) {
   const currentUser = true;
+  const currentAdmin = true;
 
   const USER_ITEMS = [
     {
@@ -81,39 +84,78 @@ function Header() {
           </a>
         </div>
 
-        <Search />
+        {visibleSearch && <Search />}
 
         <div className={cx("action")}>
           {currentUser ? (
             <>
               <div className={cx("action-item")}>
-                <Tippy
-                  content="Có thông báo mới"
-                  className={cx("custom-tooltip")}
-                >
-                  <Button
-                    href={"/thong-tin-don-hang"}
-                    text
-                    white
-                    large
-                    notificationDot={"."}
-                  >
-                    <FontAwesomeIcon icon={faClipboardList} />
-                  </Button>
-                </Tippy>
+                {currentAdmin ? (
+                  <>
+                    <Tippy
+                      content="Có thông báo mới"
+                      className={cx("custom-tooltip")}
+                    >
+                      <Button
+                        href={"/thong-tin-don-mua"}
+                        text
+                        white
+                        large
+                        notificationDot={"."}
+                      >
+                        <FontAwesomeIcon icon={faRectangleList} />
+                      </Button>
+                    </Tippy>
+                  </>
+                ) : (
+                  <>
+                    <Tippy
+                      content="Có thông báo mới"
+                      className={cx("custom-tooltip")}
+                    >
+                      <Button
+                        href={"/thong-tin-don-hang"}
+                        text
+                        white
+                        large
+                        notificationDot={"."}
+                      >
+                        <FontAwesomeIcon icon={faClipboardList} />
+                      </Button>
+                    </Tippy>
+                  </>
+                )}
               </div>
               <div className={cx("action-item")}>
-                <Tippy content="2 Sản phẩm" className={cx("custom-tooltip")}>
-                  <Button
-                    href={"/gio-hang"}
-                    text
-                    white
-                    large
-                    notificationNumber={"2"}
-                  >
-                    <FontAwesomeIcon icon={faCartShopping} />
-                  </Button>
-                </Tippy>
+                {currentAdmin ? (
+                  <>
+                    <Tippy
+                      content="Thêm sản phẩm"
+                      className={cx("custom-tooltip")}
+                    >
+                      <Button href={"/them-san-pham"} text white large>
+                        <FontAwesomeIcon icon={faCloudArrowUp} />
+                      </Button>
+                    </Tippy>
+                  </>
+                ) : (
+                  <>
+                    <Tippy
+                      content="2 Sản phẩm"
+                      className={cx("custom-tooltip")}
+                    >
+                      <Button
+                        href={"/gio-hang"}
+                        text
+                        white
+                        large
+                        notificationNumber={"2"}
+                      >
+                        <FontAwesomeIcon icon={faCartShopping} />
+                      </Button>
+                    </Tippy>
+                  </>
+                )}
               </div>
               <Menu items={USER_ITEMS}>
                 <Image src="/" alt="avatar" avatar />
@@ -152,7 +194,9 @@ function Header() {
           )}
         </div>
       </div>
-      <div className={cx("header-indexing")}>{renderItem()}</div>
+      {visibleHeaderIndexing && (
+        <div className={cx("header-indexing")}>{renderItem()}</div>
+      )}
     </header>
   );
 }

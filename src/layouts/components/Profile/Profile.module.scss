@@ -1,0 +1,97 @@
+.wrapper{
+  display: flex;
+  margin: auto;
+  margin-top: 20px;
+  width: 1000px;
+  height: 600px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 10px;
+}
+
+.avatar-container{
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 30px;
+  background: #EE9507;
+  background: linear-gradient(135deg, #EE9507, #FCC482);
+
+  .name-item{
+    font-size: 30px;
+    margin-top: 20px;
+    font-weight: 500;
+    color: white;
+  }
+
+  .custom-file-upload{
+    margin-top: 50px;
+    .take-picture-btn{  
+      display: flex;
+      flex-direction: column;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-size: 20px;
+      color: var(--white);
+
+      cursor: pointer;
+    }
+  }
+}
+
+.infomation-user{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.infomation-container{
+  width: 700px;
+  padding: 30px;
+
+  .title-infomation{
+    font-size: 28px;
+  }
+}
+
+.custom-line{
+  margin-top: 15px;
+  border: none;
+  border-top: 1px solid #333;
+}
+
+
+// input password
+.password-container{
+  margin-top: 10px;
+  display: flex;
+}
+.input-password{
+  position: relative;
+  left: -100px;
+  top: 3px;
+  width: 440px;
+  height: 35px;
+  border-radius: 20px;
+  font-weight: 600;
+  padding-left: 10px;
+  margin-top: 20px;
+  border: 1.4px solid #333;
+}
+
+.save-btn {
+  position: relative;
+  left: 500px;
+  top: 30px;
+  background: linear-gradient(135deg, #f19a0c, #faad56);
+  border-radius: 6px;
+  font-weight: 600;
+  transition: background 0.3s ease; 
+
+  &:hover {
+    background: linear-gradient(135deg, #faad56, #faad56);
+  }
+}
