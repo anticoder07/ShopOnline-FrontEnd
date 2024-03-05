@@ -1,14 +1,18 @@
 import NoSearchHeaderLayout from "../layouts/NoSearchHeaderLayout";
 import Basket from "../layouts/components/Basket";
 import Bill from "../layouts/components/Bill";
-import InformationProduct from "../layouts/components/Product/InformationProduct";
 import Profile from "../layouts/components/Profile/index";
 import Upload from "../layouts/components/Upload";
 import purchaseOrder from "../layouts/components/PurchaseOrder";
 import Home from "../pages/Home";
+import SignUp from "../pages/LogInSignUp/SignUp";
+import LogIn from "../pages/LogInSignUp/LogIn";
+import InformationProduct from "../layouts/components/Product/InformationProduct";
 
 const publicRouter = [
   { path: "/", component: Home },
+  { path: "/dang-ki", component: SignUp },
+  { path: "/dang-nhap", component: LogIn },
   { path: "/hello", component: InformationProduct },
   { path: "/thong-tin-don-hang", component: Bill },
   { path: "/thong-tin-don-mua", component: purchaseOrder },

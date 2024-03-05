@@ -21,7 +21,7 @@ import MenuItem from "../SideBar/Menu/MenuItem";
 const cx = classNames.bind(styles);
 
 function Header({ visibleHeaderIndexing = true, visibleSearch = true }) {
-  const currentUser = true;
+  const currentUser = false;
   const currentAdmin = true;
 
   const USER_ITEMS = [
@@ -76,7 +76,7 @@ function Header({ visibleHeaderIndexing = true, visibleSearch = true }) {
 
   return (
     <header className={cx("wrapper")}>
-      <div className={cx("header-wrapper")}>
+      <div className={cx("header-wrapper", "gripMobile")}>
         <div className={cx("inner")}>
           <a className={cx("logo")} href="/">
             <h1>SHOP BÁ HƯỚNG</h1>
@@ -84,14 +84,28 @@ function Header({ visibleHeaderIndexing = true, visibleSearch = true }) {
           </a>
         </div>
 
-        {visibleSearch && <Search />}
+        {visibleSearch && (
+          <div
+            style={{ display: "flex", alignItems: "center", padding: "auto" }}
+          >
+            <Search />
+            <div
+              style={{ position: "relative", right: "10px" }}
+              className={cx("displayMobile")}
+            >
+              <Menu items={USER_ITEMS}>
+                <Image src="/" alt="avatar" avatar />
+              </Menu>
+            </div>
+          </div>
+        )}
 
         <div className={cx("action")}>
           {currentUser ? (
             <>
               <div className={cx("action-item")}>
                 {currentAdmin ? (
-                  <>
+                  <div className={cx("nonDisplayMobile")}>
                     <Tippy
                       content="Có thông báo mới"
                       className={cx("custom-tooltip")}
@@ -106,9 +120,9 @@ function Header({ visibleHeaderIndexing = true, visibleSearch = true }) {
                         <FontAwesomeIcon icon={faRectangleList} />
                       </Button>
                     </Tippy>
-                  </>
+                  </div>
                 ) : (
-                  <>
+                  <div className={cx("nonDisplayMobile")}>
                     <Tippy
                       content="Có thông báo mới"
                       className={cx("custom-tooltip")}
@@ -123,12 +137,12 @@ function Header({ visibleHeaderIndexing = true, visibleSearch = true }) {
                         <FontAwesomeIcon icon={faClipboardList} />
                       </Button>
                     </Tippy>
-                  </>
+                  </div>
                 )}
               </div>
               <div className={cx("action-item")}>
                 {currentAdmin ? (
-                  <>
+                  <div className={cx("nonDisplayMobile")}>
                     <Tippy
                       content="Thêm sản phẩm"
                       className={cx("custom-tooltip")}
@@ -137,9 +151,9 @@ function Header({ visibleHeaderIndexing = true, visibleSearch = true }) {
                         <FontAwesomeIcon icon={faCloudArrowUp} />
                       </Button>
                     </Tippy>
-                  </>
+                  </div>
                 ) : (
-                  <>
+                  <div className={cx("nonDisplayMobile")}>
                     <Tippy
                       content="2 Sản phẩm"
                       className={cx("custom-tooltip")}
@@ -154,12 +168,14 @@ function Header({ visibleHeaderIndexing = true, visibleSearch = true }) {
                         <FontAwesomeIcon icon={faCartShopping} />
                       </Button>
                     </Tippy>
-                  </>
+                  </div>
                 )}
               </div>
-              <Menu items={USER_ITEMS}>
-                <Image src="/" alt="avatar" avatar />
-              </Menu>
+              <div className={cx("nonDisplayMobile")}>
+                <Menu items={USER_ITEMS}>
+                  <Image src="/" alt="avatar" avatar />
+                </Menu>
+              </div>
             </>
           ) : (
             <div
@@ -169,7 +185,7 @@ function Header({ visibleHeaderIndexing = true, visibleSearch = true }) {
               }}
             >
               <Button
-                to="/"
+                to="/dang-ki"
                 text
                 style={{
                   padding: "3px 20px",
@@ -180,13 +196,14 @@ function Header({ visibleHeaderIndexing = true, visibleSearch = true }) {
                 Sign Up
               </Button>
               <Button
-                to="/"
+                to="/dang-nhap"
                 text
                 style={{
                   padding: "3px 20px",
                   color: "white",
                   fontSize: "1.7rem",
                 }}
+                className={cx("mobile")}
               >
                 Log In
               </Button>
@@ -194,9 +211,11 @@ function Header({ visibleHeaderIndexing = true, visibleSearch = true }) {
           )}
         </div>
       </div>
-      {visibleHeaderIndexing && (
-        <div className={cx("header-indexing")}>{renderItem()}</div>
-      )}
+      <div className={cx("nonDisplayMobile")}>
+        {visibleHeaderIndexing && (
+          <div className={cx("header-indexing")}>{renderItem()}</div>
+        )}
+      </div>
     </header>
   );
 }

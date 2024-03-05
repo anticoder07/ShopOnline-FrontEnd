@@ -1,7 +1,7 @@
 .wrapper{ 
   position: fixed;
   width: 100%;
-  height: calc(var(--default-height-header) + 20);
+  height: var(--default-height-header);
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -19,7 +19,7 @@
 
   .header-indexing{
     display: flex;
-    width: 100%;
+    width: 100vw;
     padding-top: 8px;
     background: white;
   }
