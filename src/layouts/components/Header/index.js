@@ -73,9 +73,13 @@ function Header({ visibleHeaderIndexing = true, visibleSearch = true }) {
       </div>
     ));
   };
-
   return (
-    <header className={cx("wrapper")}>
+    <header
+      className={cx("wrapper", {
+        hiddenHeaderIndex: !visibleHeaderIndexing,
+        headerIndex: visibleHeaderIndexing,
+      })}
+    >
       <div className={cx("header-wrapper", "gripMobile")}>
         <div className={cx("inner")}>
           <a className={cx("logo")} href="/">

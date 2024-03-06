@@ -1,7 +1,15 @@
+.hiddenHeaderIndex {
+  height: 60px;
+}
+
+.headerIndex{
+  height: var(--default-height-header);
+}
+
+
 .wrapper{ 
   position: fixed;
   width: 100%;
-  height: var(--default-height-header);
   display: flex;
   flex-direction: column;
   justify-content: space-around;

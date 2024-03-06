@@ -2,12 +2,18 @@ import React from "react";
 import classNames from "classnames/bind";
 
 import styles from "../LogInSignUp.module.scss";
+import signUpStyes from "./SignUp.module.scss";
 
 const cx = classNames.bind(styles);
+const cxSignUp = classNames.bind(signUpStyes);
 
 function SignUp() {
   return (
-    <div className={cx("wrapper")}>
+    <div className={cxSignUp("wrapper")}>
+      <div className={cxSignUp("title")}>
+        <h1>Shop Bá Hướng</h1>
+        <span>Shop đồ thật bán đồ thật</span>
+      </div>
       <div className={cx("form")}>
         <div className={cx("main")}>
           <form
