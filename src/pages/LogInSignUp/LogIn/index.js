@@ -1,13 +1,63 @@
-import React from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import classNames from "classnames/bind";
 
 import styles from "../LogInSignUp.module.scss";
 import logInStyles from "./LogIn.module.scss";
+import AuthContext from "../../../Context/AuthProvider";
+import { logIn } from "../../../services/AuthService";
 
 const cx = classNames.bind(styles);
 const cxLogIn = classNames.bind(logInStyles);
 
 function LogIn() {
+  const { setAuth } = useContext(AuthContext);
+  const userRef = useRef();
+  const errRef = useRef();
+
+  const [user, setUser] = useState("");
+  const [pwd, setPwd] = useState("");
+  const [errMsg, setErrMsg] = useState("");
+  const [success, setSuccess] = useState(false);
+
+  useEffect(() => {
+    userRef.current.focus();
+  }, []);
+
+  useEffect(() => {
+    setErrMsg("");
+  }, [user, pwd]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const fetchApi = async () => {
+        const response = await logIn({ userEmail: user, password: pwd });
+        console.log(JSON.stringify(response?.data));
+        //console.log(JSON.stringify(response));
+        const accessToken = response?.data?.accessToken;
+        const roles = response?.data?.roles;
+        setAuth({ user, pwd, roles, accessToken });
+        setUser("");
+        setPwd("");
+        setSuccess(true);
+      };
+
+      fetchApi();
+    } catch (err) {
+      if (!err?.response) {
+        setErrMsg("No Server Response");
+      } else if (err.response?.status === 400) {
+        setErrMsg("Missing Username or Password");
+      } else if (err.response?.status === 401) {
+        setErrMsg("Unauthorized");
+      } else {
+        setErrMsg("Login Failed");
+      }
+      errRef.current.focus();
+    }
+  };
+
   return (
     <div className={cxLogIn("wrapper")}>
       <div className={cxLogIn("title")}>
@@ -16,41 +66,40 @@ function LogIn() {
       </div>
       <div className={cx("form")}>
         <div className={cx("main")}>
-          <form
-            action=""
-            method="post"
-            className={cx("form block")}
-            id="form-1"
-          >
+          <form className={cx("form block")} onSubmit={handleSubmit}>
             <h3 className={cx("heading")}>Đăng nhập</h3>
             <div className={cx("spacer")}></div>
 
             <div className={cx("form-group")}>
-              <label for="fullname" className={cx("form-label")}>
+              <label htmlFor="fullname" className={cx("form-label")}>
                 Tên Đăng Nhập
               </label>
               <input
-                type="text"
+                ref={userRef}
                 className={cx("form-control")}
+                type="text"
                 id="fullname"
-                name="fullname"
                 placeholder="VD: Cao Bá Hướng"
-                rule="isRequired"
+                onChange={(e) => setUser(e.target.value)}
+                value={user}
+                autoComplete="off"
+                required
               />
               <span className={cx("form-message")}></span>
             </div>
 
             <div className={cx("form-group")}>
-              <label for="password" className={cx("form-label")}>
+              <label htmlFor="password" className={cx("form-label")}>
                 Mật khẩu
               </label>
               <input
                 type="password"
                 className={cx("form-control")}
                 id="password"
-                name="password"
                 placeholder="Nhập mật khẩu"
-                rule="isRequired|min:6|max:20"
+                onChange={(e) => setPwd(e.target.value)}
+                value={pwd}
+                required
               />
               <span className={cx("form-message")}></span>
             </div>
