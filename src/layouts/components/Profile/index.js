@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import classNames from "classnames/bind";
 
 import styles from "./Profile.module.scss";
@@ -8,11 +8,24 @@ import Button from "../../../components/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFileArrowUp } from "@fortawesome/free-solid-svg-icons";
 import ProfileItem from "./ProfileItem";
+import { seeProfile } from "../../../services/ProfileService";
 
 const cx = classNames.bind(styles);
 
 function Profile() {
   const [avatar, setAvatar] = useState(null);
+  const [inforProfile, setInforProfile] = useState([]);
+
+  useEffect(() => {
+    const fetchApi = async () => {
+      const res = await seeProfile();
+      setInforProfile(res);
+      setAvatar(res.avatar);
+    };
+
+    fetchApi();
+    console.log(inforProfile);
+  }, []);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -29,7 +42,7 @@ function Profile() {
     <div className={cx("wrapper")}>
       <div className={cx("avatar-container")}>
         <Image src={avatar || images.noImage} alt="avatar" avatarBig />
-        <div className={cx("name-item")}>Cao Bá Hướng</div>
+        <div className={cx("name-item")}>{inforProfile.name}</div>
         <label htmlFor="fileUploadMain" className={cx("custom-file-upload")}>
           <span className={cx("take-picture-btn")}>
             <FontAwesomeIcon icon={faFileArrowUp} />

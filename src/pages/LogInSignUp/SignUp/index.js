@@ -3,80 +3,119 @@ import classNames from "classnames/bind";
 
 import styles from "../LogInSignUp.module.scss";
 import signUpStyes from "./SignUp.module.scss";
-import AuthContext from "../../../Context/AuthProvider";
+// import AuthContext from "../../../Context/AuthProvider";
 import { signUp } from "../../../services/AuthService";
 
 const cx = classNames.bind(styles);
 const cxSignUp = classNames.bind(signUpStyes);
 
 function SignUp() {
-  const { setAuth } = useContext(AuthContext);
+  // const { setAuth } = useContext(AuthContext);
 
   const errRef = useRef();
 
   const [user, setUser] = useState("");
   const [gmail, setGmail] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [dateOfBirth, setDateOfBirth] = useState("");
   const [pwd, setPwd] = useState("");
   const [confirmPwd, setConfirmPwd] = useState("");
+
   const [errMsgUser, setErrMsgUser] = useState("");
   const [errMsgEmail, setErrMsgEmail] = useState("");
+  const [errPhoneNumber, setErrPhoneNumber] = useState("");
+  const [errDateOfBirth, setErrDateOfBirth] = useState("");
   const [errMsgPwd, setErrMsgPwd] = useState("");
   const [errMsgConfirmPwd, setErrMsgConfirmPwd] = useState("");
+
   const [errMsg, setErrMsg] = useState("");
   const [success, setSuccess] = useState(false);
 
-  const handleConfirmPassword = () => {
-    if (confirmPwd.length < 5 || confirmPwd.length > 10) {
-      setErrMsgPwd("Độ dài mật khẩu từ 5 tới 10 kí tự");
-      return;
-    } else {
-      setErrMsgPwd("");
+  const handleUser = () => {
+    if (user.length === 0 || user.length > 20 || user.length < 3) {
+      setErrMsgUser("Nhập ô không hợp lệ");
     }
   };
 
-  const handleErrConfirmPassword = () => {
-    if (confirmPwd.length < 5 || confirmPwd.length > 10) {
-      setErrMsgPwd("Độ dài mật khẩu từ 5 tới 10 kí tự");
-      return;
-    } else {
-      setErrMsgPwd("");
+  const handleGmail = () => {
+    let gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+    if (
+      gmail.length === 0
+      // || !gmailRegex.test(gmail)
+    ) {
+      setErrMsgEmail("Chưa phải là gmail");
+    }
+  };
+
+  const handlePhoneNumber = () => {
+    let phoneRegex = /^\d{10}$/;
+    if (
+      phoneNumber.length === 0
+      // || !phoneRegex.test(phoneNumber)
+    ) {
+      setErrPhoneNumber("Chưa phải là số điện thoại");
+    }
+  };
+
+  const handleDateOfBirth = () => {
+    if (dateOfBirth.length === 0) {
+      setErrDateOfBirth("Vui lòng nhập ô này");
+    }
+  };
+
+  const handlePwd = () => {
+    if (pwd.length === 0) {
+      setErrMsgPwd("Vui lòng nhập ô này");
+    }
+  };
+
+  const handleConfirmPwd = () => {
+    if (confirmPwd.length === 0) {
+      setErrMsgConfirmPwd("Vui lòng nhập ô này");
     }
     if (pwd !== confirmPwd) {
-      setErrMsgConfirmPwd("Mật khẩu không khớp.");
-    } else {
-      setErrMsgConfirmPwd("");
+      setErrMsgConfirmPwd("Mật khẩu nhập lại không trùng khớp");
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
+    // e.preventDefault();
 
-    try {
-      const fetchApi = async () => {
-        const response = await signUp({ user, gmail, pwd });
-        console.log(JSON.stringify(response?.data));
-        //console.log(JSON.stringify(response));
-        const accessToken = response?.data?.accessToken;
-        const roles = response?.data?.roles;
-        setAuth({ user, pwd, roles, accessToken });
-        setUser("");
-        setPwd("");
-        setSuccess(true);
-      };
+    // try {
+    const fetchApi = async () => {
+      const response = await signUp({
+        username: user,
+        email: gmail,
+        password: pwd,
+        confirmPassword: confirmPwd,
+        sdt: phoneNumber,
+        dateOfBirth: dateOfBirth,
+      });
+      // const accessToken = response?.data?.accessToken;
+      // const roles = response?.data?.roles;
+      // setAuth({ user, pwd, roles, accessToken });
+      // setUser("");
+      // setGmail("");
+      // setPhoneNumber("");
+      // setDateOfBirth("");
+      // setPwd("");
+      // setConfirmPwd("");
+      // setSuccess(true);
+    };
 
-      fetchApi();
-    } catch (err) {
-      if (!err?.response) {
-        setErrMsg("No Server Response");
-      } else if (err.response?.status === 400) {
-        setErrMsg("Missing Username or Password");
-      } else if (err.response?.status === 401) {
-        setErrMsg("Unauthorized");
-      } else {
-        setErrMsg("SignUp Failed");
-      }
-      errRef.current.focus();
-    }
+    fetchApi();
+    // } catch (err) {
+    //   if (!err?.response) {
+    //     setErrMsg("No Server Response");
+    //   } else if (err.response?.status === 400) {
+    //     setErrMsg("Missing Username or Password");
+    //   } else if (err.response?.status === 401) {
+    //     setErrMsg("Unauthorized");
+    //   } else {
+    //     setErrMsg("SignUp Failed");
+    //   }
+    //   errRef.current.focus();
+    // }
   };
 
   return (
@@ -89,7 +128,6 @@ function SignUp() {
         <div className={cx("main")}>
           <form className={cx("form block")} onSubmit={handleSubmit}>
             <h3 className={cx("heading")}>Đăng Kí Thành Viên</h3>
-            <p className={cx("desc")}>Đăng kí để được nhận kẹo 🍭</p>
             <div className={cx("spacer")}></div>
 
             <div className={cx("form-group")}>
@@ -105,6 +143,7 @@ function SignUp() {
                 onChange={(e) => {
                   setUser(e.target.value);
                 }}
+                onBlur={handleUser}
               />
               <span className={cx("form-message")}>{errMsgUser}</span>
             </div>
@@ -122,8 +161,44 @@ function SignUp() {
                 onChange={(e) => {
                   setGmail(e.target.value);
                 }}
+                onBlur={handleGmail}
               />
               <span className={cx("form-message")}>{errMsgEmail}</span>
+            </div>
+
+            <div className={cx("form-group")}>
+              <label htmlFor="phoneNumber" className={cx("form-label")}>
+                Phone Number
+              </label>
+              <input
+                type="text"
+                className={cx("form-control")}
+                id="phoneNumber"
+                placeholder="0988765555"
+                required
+                onChange={(e) => {
+                  setPhoneNumber(e.target.value);
+                }}
+                onBlur={handlePhoneNumber}
+              />
+              <span className={cx("form-message")}>{errPhoneNumber}</span>
+            </div>
+
+            <div className={cx("form-group")}>
+              <label htmlFor="dateOfBirth" className={cx("form-label")}>
+                Phone Number
+              </label>
+              <input
+                type="date"
+                className={cx("form-control")}
+                id="dateOfBirth"
+                required
+                onChange={(e) => {
+                  setDateOfBirth(e.target.value);
+                }}
+                onBlur={handleDateOfBirth}
+              />
+              <span className={cx("form-message")}>{errDateOfBirth}</span>
             </div>
 
             <div className={cx("form-group")}>
@@ -141,7 +216,7 @@ function SignUp() {
                 onChange={(e) => {
                   setPwd(e.target.value);
                 }}
-                onBlur={handleConfirmPassword}
+                onBlur={handlePwd}
               />
               <span className={cx("form-message")}>{errMsgPwd}</span>
             </div>
@@ -164,7 +239,7 @@ function SignUp() {
                 onChange={(e) => {
                   setConfirmPwd(e.target.value);
                 }}
-                onBlur={handleErrConfirmPassword}
+                onBlur={handleConfirmPwd}
               />
               <span className={cx("form-message")}>{errMsgConfirmPwd}</span>
             </div>

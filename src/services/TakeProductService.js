@@ -11,7 +11,7 @@ export const getProductHomePage = async () => {
 
 export const getProductType = async (t) => {
   try {
-    const res = await request.get("take/product/by/type", {
+    const res = await request.get("api/take/product/by/type", {
       params: {
         t,
       },
@@ -24,7 +24,7 @@ export const getProductType = async (t) => {
 
 export const getProductId = async (i) => {
   try {
-    const res = await request.get("take/product/by/id", {
+    const res = await request.get("api/take/product/by/id", {
       params: {
         i,
       },

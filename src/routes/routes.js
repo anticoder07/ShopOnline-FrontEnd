@@ -8,13 +8,13 @@ import Home from "../pages/Home";
 import SignUp from "../pages/LogInSignUp/SignUp";
 import LogIn from "../pages/LogInSignUp/LogIn";
 import InformationProduct from "../layouts/components/Product/InformationProduct";
-import NoHeaderLayout from "../layouts/NoHeaderLayout";
+import NoHeaderLayout from "../layouts/NoSearchHeaderLayout";
 
 const publicRouter = [
   { path: "/", component: Home },
-  { path: "/dang-ki", component: SignUp, layout: NoSearchHeaderLayout },
+  { path: "/dang-ki", component: SignUp, layout: NoHeaderLayout },
   { path: "/dang-nhap", component: LogIn, layout: NoSearchHeaderLayout },
-  { path: "/hello", component: InformationProduct },
+  { path: "/by/id", component: InformationProduct },
   { path: "/thong-tin-don-hang", component: Bill },
   { path: "/thong-tin-don-mua", component: purchaseOrder },
   { path: "/gio-hang", component: Basket },

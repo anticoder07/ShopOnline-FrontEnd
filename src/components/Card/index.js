@@ -8,15 +8,19 @@ import { NavLink } from "react-router-dom";
 const cx = classNames.bind(styles);
 
 function Card({ data }) {
+  console.log(data);
   return (
-    <NavLink to={data.to} className={cx("wrapper", "navlink-wrapper")}>
+    <NavLink
+      to={`/by/id?i=${data.id}`}
+      className={cx("wrapper", "navlink-wrapper")}
+    >
       <div className={cx("logo")}>
-        <Image src={data.logo} alt="product" card />
+        <Image src={data.picture} alt="product" card />
       </div>
       <div className={cx("info-wrapper")}>
-        <span className={cx("title")}>{data.title}</span>
+        <span className={cx("title")}>{data.name}</span>
         <div className={cx("promotion")}>
-          {data.promotion.length > 0 ? (
+          {data.promotion === null ? (
             <>
               <span className={cx("promotion-info")}>{data.promotion}</span>
             </>
@@ -25,7 +29,7 @@ function Card({ data }) {
           )}
         </div>
         <div className={cx("information-product")}>
-          <span className={cx("price")}>{data.price}VND</span>
+          <span className={cx("price")}>{data.priceMin}VND</span>
           <span className={cx("sold")}>Đã bán {data.sold}</span>
         </div>
       </div>

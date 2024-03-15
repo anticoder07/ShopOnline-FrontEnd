@@ -4,7 +4,7 @@ import classNames from "classnames/bind";
 import styles from "./Home.module.scss";
 import Card from "../../components/Card";
 import Pagination from "../../components/Pagination";
-import { cardProductService } from "../../services/CardProductService";
+import { HomePageService } from "../../services/HomePageService";
 
 const cx = classNames.bind(styles);
 
@@ -14,13 +14,13 @@ function Home() {
 
   useEffect(() => {
     const fetchApi = async () => {
-      const result = await cardProductService(page);
+      const result = await HomePageService();
       console.log(result);
       setCardItems(result);
     };
 
     fetchApi();
-  }, [page]);
+  }, []);
 
   const totalPages = 10;
 
@@ -33,8 +33,8 @@ function Home() {
   return (
     <div className={cx("wrapper")}>
       <div className={cx("container")}>
-        {cardItems.map((item, index) => (
-          <Card key={index} data={item} />
+        {cardItems.map((item) => (
+          <Card key={item.id} data={item} />
         ))}
       </div>
       <Pagination
