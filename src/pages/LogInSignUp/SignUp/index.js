@@ -3,14 +3,14 @@ import classNames from "classnames/bind";
 
 import styles from "../LogInSignUp.module.scss";
 import signUpStyes from "./SignUp.module.scss";
-// import AuthContext from "../../../Context/AuthProvider";
+import AuthContext from "../../../Context/AuthProvider";
 import { signUp } from "../../../services/AuthService";
 
 const cx = classNames.bind(styles);
 const cxSignUp = classNames.bind(signUpStyes);
 
 function SignUp() {
-  // const { setAuth } = useContext(AuthContext);
+  const { setAuth } = useContext(AuthContext);
 
   const errRef = useRef();
 
@@ -78,44 +78,45 @@ function SignUp() {
     }
   };
 
-  const handleSubmit = async () => {
-    // e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    // try {
-    const fetchApi = async () => {
-      const response = await signUp({
-        username: user,
-        email: gmail,
-        password: pwd,
-        confirmPassword: confirmPwd,
-        sdt: phoneNumber,
-        dateOfBirth: dateOfBirth,
-      });
-      // const accessToken = response?.data?.accessToken;
-      // const roles = response?.data?.roles;
-      // setAuth({ user, pwd, roles, accessToken });
-      // setUser("");
-      // setGmail("");
-      // setPhoneNumber("");
-      // setDateOfBirth("");
-      // setPwd("");
-      // setConfirmPwd("");
-      // setSuccess(true);
-    };
+    try {
+      const fetchApi = async () => {
+        const response = await signUp({
+          username: user,
+          email: gmail,
+          password: pwd,
+          confirmPassword: confirmPwd,
+          sdt: phoneNumber,
+          role: "admin",
+          dateOfBirth: dateOfBirth,
+        });
+        const accessToken = response?.data?.accessToken;
+        const roles = response?.data?.roles;
+        setAuth({ user, pwd, roles, accessToken });
+        // setUser("");
+        // setGmail("");
+        // setPhoneNumber("");
+        // setDateOfBirth("");
+        // setPwd("");
+        // setConfirmPwd("");
+        setSuccess(true);
+      };
 
-    fetchApi();
-    // } catch (err) {
-    //   if (!err?.response) {
-    //     setErrMsg("No Server Response");
-    //   } else if (err.response?.status === 400) {
-    //     setErrMsg("Missing Username or Password");
-    //   } else if (err.response?.status === 401) {
-    //     setErrMsg("Unauthorized");
-    //   } else {
-    //     setErrMsg("SignUp Failed");
-    //   }
-    //   errRef.current.focus();
-    // }
+      fetchApi();
+    } catch (err) {
+      if (!err?.response) {
+        setErrMsg("No Server Response");
+      } else if (err.response?.status === 400) {
+        setErrMsg("Missing Username or Password");
+      } else if (err.response?.status === 401) {
+        setErrMsg("Unauthorized");
+      } else {
+        setErrMsg("SignUp Failed");
+      }
+      errRef.current.focus();
+    }
   };
 
   return (

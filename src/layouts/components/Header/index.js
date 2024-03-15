@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import classNames from "classnames/bind";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -17,12 +17,19 @@ import Search from "../Search";
 import Image from "../../../components/Image";
 import Menu from "../../../components/Popper/Menu/Menu";
 import MenuItem from "../SideBar/Menu/MenuItem";
+import AuthContext from "../../../Context/AuthProvider";
 
 const cx = classNames.bind(styles);
 
 function Header({ visibleHeaderIndexing = true, visibleSearch = true }) {
-  const currentUser = false;
-  const currentAdmin = true;
+  const { auth } = useContext(AuthContext); // Lấy thông tin xác thực từ context
+  const { user, roles, accessToken } = auth;
+
+  const currentUser = user; // Kiểm tra xem token đã đư
+  const currentAdmin = false;
+  if (roles === "admin") {
+    currentAdmin = true;
+  }
 
   const USER_ITEMS = [
     {
