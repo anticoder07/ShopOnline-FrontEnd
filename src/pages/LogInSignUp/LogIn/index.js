@@ -5,6 +5,7 @@ import styles from "../LogInSignUp.module.scss";
 import logInStyles from "./LogIn.module.scss";
 import AuthContext from "../../../Context/AuthProvider";
 import { logIn } from "../../../services/AuthService";
+import { useNavigate } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 const cxLogIn = classNames.bind(logInStyles);
@@ -13,9 +14,11 @@ function LogIn() {
   const { setAuth } = useContext(AuthContext);
   const userRef = useRef();
   const errRef = useRef();
+  const navigate = useNavigate();
 
   const [user, setUser] = useState("");
   const [pwd, setPwd] = useState("");
+
   const [errMsg, setErrMsg] = useState("");
   const [success, setSuccess] = useState(false);
 
@@ -33,10 +36,8 @@ function LogIn() {
     try {
       const fetchApi = async () => {
         const response = await logIn({ userEmail: user, password: pwd });
-        console.log(JSON.stringify(response?.data));
-        //console.log(JSON.stringify(response));
-        const accessToken = response?.data?.accessToken;
-        const roles = response?.data?.roles;
+        const accessToken = response.accessToken;
+        const roles = response.roles;
         setAuth({ user, pwd, roles, accessToken });
         setUser("");
         setPwd("");
@@ -57,6 +58,13 @@ function LogIn() {
       errRef.current.focus();
     }
   };
+
+  useEffect(() => {
+    if (success) {
+      // window.location.href = "/";
+      navigate("/");
+    }
+  }, [success]);
 
   return (
     <div className={cxLogIn("wrapper")}>

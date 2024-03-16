@@ -29,7 +29,7 @@ function SignUp() {
   const [errMsgConfirmPwd, setErrMsgConfirmPwd] = useState("");
 
   const [errMsg, setErrMsg] = useState("");
-  const [success, setSuccess] = useState(false);
+  // const [success, setSuccess] = useState(false);
 
   const handleUser = () => {
     if (user.length === 0 || user.length > 20 || user.length < 3) {
@@ -92,16 +92,22 @@ function SignUp() {
           role: "admin",
           dateOfBirth: dateOfBirth,
         });
-        const accessToken = response?.data?.accessToken;
-        const roles = response?.data?.roles;
-        setAuth({ user, pwd, roles, accessToken });
+        const accessToken = response.accessToken;
+        console.log(accessToken);
+        // const roles = response.roles;
+        setAuth({
+          user,
+          pwd,
+          accessToken,
+          // , roles, accessToken
+        });
         // setUser("");
         // setGmail("");
         // setPhoneNumber("");
         // setDateOfBirth("");
         // setPwd("");
         // setConfirmPwd("");
-        setSuccess(true);
+        // setSuccess(true);
       };
 
       fetchApi();

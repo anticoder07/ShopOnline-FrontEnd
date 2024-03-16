@@ -18,11 +18,14 @@ import Image from "../../../components/Image";
 import Menu from "../../../components/Popper/Menu/Menu";
 import MenuItem from "../SideBar/Menu/MenuItem";
 import AuthContext from "../../../Context/AuthProvider";
+import { logOut } from "../../../services/AuthService";
 
 const cx = classNames.bind(styles);
 
 function Header({ visibleHeaderIndexing = true, visibleSearch = true }) {
   const { auth } = useContext(AuthContext); // Lấy thông tin xác thực từ context
+
+  console.log(auth);
   const { user, roles, accessToken } = auth;
 
   const currentUser = user; // Kiểm tra xem token đã đư
@@ -47,6 +50,16 @@ function Header({ visibleHeaderIndexing = true, visibleSearch = true }) {
       title: "Log out",
       to: "/trang-chu",
       separate: true,
+      // onClick: () => {
+      //   try {
+      //     const fetchApi = async () => {
+      //       const res = await logOut();
+      //       localStorage.clear();
+      //     };
+
+      //     fetchApi();
+      //   } catch (err) {}
+      // },
     },
   ];
 

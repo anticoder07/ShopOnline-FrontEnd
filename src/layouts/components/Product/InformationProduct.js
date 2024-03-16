@@ -5,7 +5,6 @@ import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 
 import styles from "./InformationProduct.module.scss";
 import Image from "../../../components/Image";
-import images from "../../../assets/images";
 import Button from "../../../components/Button";
 import Quantity from "../../../components/Quantity";
 import Option from "./Option";
@@ -13,6 +12,7 @@ import Sold from "./Sold";
 import Card from "../../../components/Card";
 import { useLocation } from "react-router-dom";
 import { getProductId } from "../../../services/TakeProductService";
+import { addProductToBasket } from "../../../services/BasketService";
 
 const cx = classNames.bind(styles);
 
@@ -25,6 +25,7 @@ function InformationProduct() {
   const [contentAttributes, setContentAttributes] = useState([]);
   const [cardItemsRecomment, setCardItemsRecomment] = useState([]);
   const [quantityIndex, setQuantityIndex] = useState(0);
+  const [type, setType] = useState(null);
 
   const handleQuantityIndexChange = (newIndex) => {
     setQuantityIndex(newIndex);
@@ -45,6 +46,24 @@ function InformationProduct() {
       console.error(err);
     }
   }, []);
+
+  const handleAddProductToBasket = () => {
+    try {
+      console.log(typeof id);
+      const fetchApi = async () => {
+        const res = await addProductToBasket({
+          i: 10,
+          // q: Number(quantityIndex),
+          // t: Number(type),
+        });
+        console.log(res);
+      };
+
+      fetchApi();
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   const CARD_ITEMS = [];
 
@@ -79,8 +98,12 @@ function InformationProduct() {
                         <Image src={item.picture} squareTypeOption />
                       );
                     }
+                    optionItem.id = item.id;
                     return optionItem;
                   })}
+                  returnValue={(item, value) => {
+                    setType(item.item.id);
+                  }}
                 />
               );
             })}
@@ -102,6 +125,7 @@ function InformationProduct() {
               <Button
                 leftIcon={<FontAwesomeIcon icon={faCartShopping} />}
                 className={cx("buttonAddCart")}
+                onClick={handleAddProductToBasket}
               >
                 thêm vào giỏ hàng
               </Button>

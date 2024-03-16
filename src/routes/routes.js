@@ -21,6 +21,7 @@ const publicRouter = [
   { path: "/profile", component: Profile },
   { path: "/them-san-pham", component: Upload, layout: NoSearchHeaderLayout },
   { path: `http://localhost:3000//?page=`, Component: Home },
+  { path: `/trang-chu`, Component: Home },
 ];
 
 for (let page = 1; page <= 1000; page++) {

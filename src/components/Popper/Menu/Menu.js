@@ -11,7 +11,7 @@ const cx = classNames.bind(styles);
 function Menu({ items = [], visible = false, placement, className, children }) {
   const renderItem = () => {
     return items.map((item, index) => (
-      <MenuItem key={index} data={item} onClick={undefined} />
+      <MenuItem key={index} data={item} onClick={item.onClick} />
     ));
   };
 

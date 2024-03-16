@@ -1,4 +1,5 @@
 import * as request from "../utils/request";
+import authHeader from "./authHeader";
 
 export const seeBill = async (i) => {
   try {
@@ -11,11 +12,17 @@ export const seeBill = async (i) => {
   }
 };
 
-export const addProductToBasket = async (i) => {
+export const addProductToBasket = async (data) => {
   try {
-    const res = await request.get("basket/add", {
-      param: i,
-    });
+    const res = await request.post(
+      "api/basket/add",
+      {
+        i: data,
+        // q: data.q,
+        // t: data.t,
+      },
+      { headers: authHeader() }
+    );
     return res.data;
   } catch (error) {
     console.log(error);

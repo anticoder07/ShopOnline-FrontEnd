@@ -1,14 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import classNames from "classnames/bind";
 
 import styles from "./purchaseOrder.module.scss";
 import BillItem from "../Bill/BillItem";
 import MenuItem from "../SideBar/Menu/MenuItem";
 import Search from "../Search";
+import { seeBill } from "../../../services/BillService";
 
 const cx = classNames.bind(styles);
 
 function PurchaseOrder() {
+  const [data, setData] = useState([]);
+
   const BASKEt_ITEMS = [
     {
       title: "Tất cả",
@@ -35,6 +38,19 @@ function PurchaseOrder() {
       </div>
     ));
   };
+
+  useEffect(() => {
+    try {
+      const fetchApi = async () => {
+        const res = await seeBill();
+        setData(res);
+      };
+
+      fetchApi();
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
 
   return (
     <>
