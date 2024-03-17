@@ -7,7 +7,7 @@ const request = axios.create({
   //   "Content-Type": "application/json",
   // },
 });
-
+axios.defaults.headers.post["Content-Type"] = "application/json";
 // request.interceptors.request.use(
 //   (config) => {
 //     const token = localStorage.getItem("token");

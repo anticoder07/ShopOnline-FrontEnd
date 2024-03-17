@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import classNames from "classnames/bind";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -28,11 +28,25 @@ function Header({ visibleHeaderIndexing = true, visibleSearch = true }) {
   console.log(auth);
   const { user, roles, accessToken } = auth;
 
-  const currentUser = user; // Kiểm tra xem token đã đư
+  const [currentUser, setCurrentUser] = useState(user); // Kiểm tra xem token đã đư
   const currentAdmin = false;
   if (roles === "admin") {
     currentAdmin = true;
   }
+
+  const handleLogOut = () => {
+    try {
+      const fetchApi = async () => {
+        const res = await logOut();
+        localStorage.clear();
+      };
+
+      fetchApi();
+      setCurrentUser(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const USER_ITEMS = [
     {
@@ -48,18 +62,8 @@ function Header({ visibleHeaderIndexing = true, visibleSearch = true }) {
     {
       icon: <FontAwesomeIcon icon={faArrowRightFromBracket} />,
       title: "Log out",
-      to: "/trang-chu",
       separate: true,
-      // onClick: () => {
-      //   try {
-      //     const fetchApi = async () => {
-      //       const res = await logOut();
-      //       localStorage.clear();
-      //     };
-
-      //     fetchApi();
-      //   } catch (err) {}
-      // },
+      onClick: handleLogOut,
     },
   ];
 

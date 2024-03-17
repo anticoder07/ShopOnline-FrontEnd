@@ -5,15 +5,28 @@ import styles from "./Basket.module.scss";
 import BillItem from "../Bill/BillItem";
 import Search from "../Search";
 import Button from "../../../components/Button";
+import { seeBasket } from "../../../services/BasketService";
 
 const cx = classNames.bind(styles);
 
 function Basket() {
   const [selectAllChecked, setSelectAllChecked] = useState(false);
+  const [page, setPage] = useState([]);
 
   const handleSelectAllChange = () => {
     setSelectAllChecked(!selectAllChecked);
   };
+
+  useEffect(() => {
+    try {
+      const fetchApi = async () => {
+        const res = await seeBasket();
+        setPage(res);
+      };
+
+      fetchApi();
+    } catch (err) {}
+  }, []);
 
   return (
     <>
@@ -30,11 +43,26 @@ function Basket() {
           />
           Chọn tất cả
         </div>
-        <BillItem checkBtn check={selectAllChecked} />
-        <BillItem checkBtn check={selectAllChecked} />
-        <BillItem checkBtn check={selectAllChecked} />
-        <BillItem checkBtn check={selectAllChecked} />
-        <BillItem checkBtn check={selectAllChecked} />
+        {page.map((item) => {
+          const productTypeList =
+            item.productDto.productTypeList[0].productTypeItemDtoList;
+          console.log(productTypeList);
+          let price = 0;
+          productTypeList.array.forEach((element) => {
+            if (element.id === item.typeId) {
+              price = element.price;
+            }
+          });
+
+          const data = {
+            picture: item.productDto.picture,
+            name: item.productDto.name,
+            type: item.type,
+            quantity: item.quantity,
+            total: price,
+          };
+          return <BillItem data={data} checkBtn check={selectAllChecked} />;
+        })}
         <div className={cx("status")}>
           <div className={cx("delivery")}>
             <Button

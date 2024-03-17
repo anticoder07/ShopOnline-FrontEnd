@@ -3,11 +3,10 @@ import classNames from "classnames/bind";
 
 import styles from "./Bill.module.scss";
 import Image from "../../../../components/Image";
-import images from "../../../../assets/images";
 
 const cx = classNames.bind(styles);
 
-function BasketItem({ checkBtn = false, check = false }) {
+function BasketItem({ data, checkBtn = false, check = false }) {
   return (
     <div className={cx("wrapper")}>
       <div className={cx("product")}>
@@ -17,15 +16,15 @@ function BasketItem({ checkBtn = false, check = false }) {
           <></>
         )}
         <div className={cx("picture")}>
-          <Image src={images.iphone} alt="product" squareLarge />
+          <Image src={data.picture} alt="product" squareLarge />
         </div>
         <div className={cx("information")}>
-          <div className={cx("title")}>Iphone 15 pro max</div>
-          <div className={cx("type")}>Phân loại hàng: 256 GB</div>
-          <div className={cx("quantity")}>1111</div>
+          <div className={cx("title")}>{data.name}</div>
+          <div className={cx("type")}>{`Phân loại hàng: ${data.type}`}</div>
+          <div className={cx("quantity")}>{data.quantity}</div>
         </div>
       </div>
-      <div className={cx("total")}>₫2.000</div>
+      <div className={cx("total")}>{`đ${data.total}`}</div>
     </div>
   );
 }

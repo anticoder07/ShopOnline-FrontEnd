@@ -15,6 +15,7 @@ function Home() {
   useEffect(() => {
     const fetchApi = async () => {
       const result = await HomePageService();
+      if (result === null) setCardItems([]);
       setCardItems(result);
     };
 

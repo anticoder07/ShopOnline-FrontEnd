@@ -1,20 +1,25 @@
 import React, { useEffect, useState } from "react";
 import classNames from "classnames/bind";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFileArrowUp } from "@fortawesome/free-solid-svg-icons";
 
 import styles from "./Profile.module.scss";
 import Image from "../../../components/Image";
 import images from "../../../assets/images";
 import Button from "../../../components/Button";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFileArrowUp } from "@fortawesome/free-solid-svg-icons";
 import ProfileItem from "./ProfileItem";
-import { seeProfile } from "../../../services/ProfileService";
+import {
+  changeAvatarProfile,
+  changePasswordProfile,
+  seeProfile,
+} from "../../../services/ProfileService";
 
 const cx = classNames.bind(styles);
 
 function Profile() {
   const [avatar, setAvatar] = useState(null);
   const [inforProfile, setInforProfile] = useState([]);
+  const [pwd, setPwd] = useState("");
 
   useEffect(() => {
     const fetchApi = async () => {
@@ -38,6 +43,26 @@ function Profile() {
     }
   };
 
+  const handleSaveProfile = () => {
+    try {
+      const fetchApi = async () => {
+        if (avatar !== inforProfile.avatar) {
+          const res = await changeAvatarProfile(avatar);
+          console.log(res);
+        }
+        if (pwd !== "") {
+          const res = await changePasswordProfile(pwd);
+        }
+      };
+
+      fetchApi();
+    } catch (err) {}
+  };
+
+  useEffect(() => {
+    console.log(pwd);
+  }, [pwd]);
+
   return (
     <div className={cx("wrapper")}>
       <div className={cx("avatar-container")}>
@@ -60,27 +85,33 @@ function Profile() {
         <h1 className={cx("title-infomation")}>Thông tin người dùng</h1>
         <hr className={cx("custom-line")} />
         <div className={cx("infomation-user")}>
-          <ProfileItem title={"Họ và tên"} value={"Cao Bá Hướng"} />
-          <ProfileItem title={"Số điện thoại"} value={"0946483158"} />
-          <ProfileItem title={"Ngày sinh"} value={"26/02/2004"} />
+          <ProfileItem title={"Họ và tên"} value={inforProfile.name} />
+          <ProfileItem
+            title={"Số điện thoại"}
+            value={inforProfile.phoneNumber}
+          />
+          <ProfileItem title={"Ngày sinh"} value={inforProfile.dateOfBirth} />
         </div>
         <h1 className={cx("title-infomation")} style={{ marginTop: "25px" }}>
           Thông tin tài khoản
         </h1>
         <hr className={cx("custom-line")} />
         <div className={cx("infomation-user")}>
-          <ProfileItem title={"Tên đăng nhập"} value={"caobahuong"} />
-          <ProfileItem title={"Gmail"} value={"caobahuong@gmail.com"} />
+          {/* <ProfileItem title={"Tên đăng nhập"} value={inforProfile.userEmail} /> */}
+          <ProfileItem title={"Gmail"} value={inforProfile.userEmail} />
           <div className={cx("password-container")}>
             <ProfileItem title={"Đổi mật khẩu"} value={""} />
             <input
               type="password"
               placeholder="Mật khẩu mới"
               className={cx("input-password")}
+              onChange={(e) => {
+                setPwd(e.target.value);
+              }}
             />
           </div>
         </div>
-        <Button primary className={cx("save-btn")}>
+        <Button primary className={cx("save-btn")} onClick={handleSaveProfile}>
           Lưu thay đổi
         </Button>
       </div>

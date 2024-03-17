@@ -49,13 +49,8 @@ function InformationProduct() {
 
   const handleAddProductToBasket = () => {
     try {
-      console.log(typeof id);
       const fetchApi = async () => {
-        const res = await addProductToBasket({
-          i: 10,
-          // q: Number(quantityIndex),
-          // t: Number(type),
-        });
+        const res = await addProductToBasket(id, quantityIndex, type);
         console.log(res);
       };
 
@@ -64,7 +59,6 @@ function InformationProduct() {
       console.error(err);
     }
   };
-
   const CARD_ITEMS = [];
 
   return (

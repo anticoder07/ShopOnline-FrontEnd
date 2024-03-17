@@ -1,16 +1,18 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import classNames from "classnames/bind";
 
 import styles from "../LogInSignUp.module.scss";
 import signUpStyes from "./SignUp.module.scss";
 import AuthContext from "../../../Context/AuthProvider";
 import { signUp } from "../../../services/AuthService";
+import { Navigate, useNavigate } from "react-router";
 
 const cx = classNames.bind(styles);
 const cxSignUp = classNames.bind(signUpStyes);
 
 function SignUp() {
   const { setAuth } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const errRef = useRef();
 
@@ -27,54 +29,66 @@ function SignUp() {
   const [errDateOfBirth, setErrDateOfBirth] = useState("");
   const [errMsgPwd, setErrMsgPwd] = useState("");
   const [errMsgConfirmPwd, setErrMsgConfirmPwd] = useState("");
-
   const [errMsg, setErrMsg] = useState("");
-  // const [success, setSuccess] = useState(false);
+
+  const [success, setSuccess] = useState(false);
 
   const handleUser = () => {
     if (user.length === 0 || user.length > 20 || user.length < 3) {
       setErrMsgUser("Nhập ô không hợp lệ");
+    } else {
+      setErrMsgUser("");
     }
   };
 
   const handleGmail = () => {
     let gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
-    if (
-      gmail.length === 0
-      // || !gmailRegex.test(gmail)
-    ) {
+    if (gmail.length === 0 || !gmailRegex.test(gmail)) {
       setErrMsgEmail("Chưa phải là gmail");
+    } else {
+      setErrMsgEmail("");
     }
   };
 
   const handlePhoneNumber = () => {
-    let phoneRegex = /^\d{10}$/;
+    let phoneRegex10 = /^\d{10}$/;
+    let phoneRegex11 = /^\d{11}$/;
     if (
-      phoneNumber.length === 0
-      // || !phoneRegex.test(phoneNumber)
+      phoneNumber.length === 0 ||
+      (!phoneRegex10.test(phoneNumber) && !phoneRegex11.test(phoneNumber))
     ) {
       setErrPhoneNumber("Chưa phải là số điện thoại");
+    } else {
+      setErrPhoneNumber("");
     }
   };
 
   const handleDateOfBirth = () => {
     if (dateOfBirth.length === 0) {
       setErrDateOfBirth("Vui lòng nhập ô này");
+    } else {
+      setErrMsgPwd("");
     }
   };
 
   const handlePwd = () => {
     if (pwd.length === 0) {
       setErrMsgPwd("Vui lòng nhập ô này");
+    } else {
+      setErrMsgPwd("");
     }
   };
 
   const handleConfirmPwd = () => {
     if (confirmPwd.length === 0) {
       setErrMsgConfirmPwd("Vui lòng nhập ô này");
+    } else {
+      setErrMsgConfirmPwd("");
     }
     if (pwd !== confirmPwd) {
       setErrMsgConfirmPwd("Mật khẩu nhập lại không trùng khớp");
+    } else {
+      setErrMsgConfirmPwd("");
     }
   };
 
@@ -82,48 +96,48 @@ function SignUp() {
     e.preventDefault();
 
     try {
-      const fetchApi = async () => {
-        const response = await signUp({
-          username: user,
-          email: gmail,
-          password: pwd,
-          confirmPassword: confirmPwd,
-          sdt: phoneNumber,
-          role: "admin",
-          dateOfBirth: dateOfBirth,
-        });
+      const response = await signUp({
+        username: user,
+        email: gmail,
+        password: pwd,
+        confirmPassword: confirmPwd,
+        sdt: phoneNumber,
+        role: "admin",
+        dateOfBirth: dateOfBirth,
+      });
+      if (response.accessToken) {
         const accessToken = response.accessToken;
-        console.log(accessToken);
-        // const roles = response.roles;
         setAuth({
           user,
           pwd,
           accessToken,
-          // , roles, accessToken
         });
-        // setUser("");
-        // setGmail("");
-        // setPhoneNumber("");
-        // setDateOfBirth("");
-        // setPwd("");
-        // setConfirmPwd("");
-        // setSuccess(true);
-      };
-
-      fetchApi();
+        setSuccess(true);
+      } else {
+        if (response.status === 500) {
+          setErrMsgEmail(response.data.message);
+        } else if (response.status === 401) {
+          setErrMsg("Unauthorized");
+        } else {
+          setErrMsg("Login Failed");
+        }
+      }
     } catch (err) {
       if (!err?.response) {
         setErrMsg("No Server Response");
-      } else if (err.response?.status === 400) {
-        setErrMsg("Missing Username or Password");
-      } else if (err.response?.status === 401) {
-        setErrMsg("Unauthorized");
       } else {
-        setErrMsg("SignUp Failed");
+        setErrMsg("Login Failed");
       }
       errRef.current.focus();
     }
   };
+
+  useEffect(() => {
+    if (success) {
+      setSuccess(false);
+      navigate("/");
+    }
+  }, [success]);
 
   return (
     <div className={cxSignUp("wrapper")}>
@@ -256,6 +270,13 @@ function SignUp() {
             <button className={cx("form-submit", "button-89")} type="submit">
               Đăng Ký
             </button>
+            <span
+              className={cx("form-message")}
+              style={{ fontSize: "16px", fontWeight: "500" }}
+            >
+              <div className={cx("spacer")}></div>
+              {errMsg}
+            </span>
           </form>
         </div>
       </div>

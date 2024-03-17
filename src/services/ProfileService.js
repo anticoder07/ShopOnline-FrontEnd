@@ -1,17 +1,20 @@
 import * as request from "../utils/request";
+import authHeader from "./authHeader";
 
 export const seeProfile = async () => {
   try {
-    const res = await request.get("api/profile/see");
+    const res = await request.get("api/profile/see", { headers: authHeader() });
     return res.data;
   } catch (error) {
-    console.log(error);
+    return { status: error.response.status, data: error.response.data };
   }
 };
 
 export const changeUserProfile = async (name) => {
   try {
-    const res = await request.get("profile/change/name", name);
+    const res = await request.post("api/profile/change/name", name, {
+      headers: authHeader(),
+    });
     return res.data;
   } catch (error) {
     console.log(error);
@@ -20,7 +23,20 @@ export const changeUserProfile = async (name) => {
 
 export const changePasswordProfile = async (password) => {
   try {
-    const res = await request.get("profile/change/password", password);
+    const res = await request.post("api/profile/change/password", password, {
+      headers: authHeader(),
+    });
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const changeAvatarProfile = async (avatar) => {
+  try {
+    const res = await request.post("api/profile/change/avatar", avatar, {
+      headers: authHeader(),
+    });
     return res.data;
   } catch (error) {
     console.log(error);

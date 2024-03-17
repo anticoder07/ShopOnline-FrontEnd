@@ -13,7 +13,6 @@ const cxLogIn = classNames.bind(logInStyles);
 function LogIn() {
   const { setAuth } = useContext(AuthContext);
   const userRef = useRef();
-  const errRef = useRef();
   const navigate = useNavigate();
 
   const [user, setUser] = useState("");
@@ -34,33 +33,34 @@ function LogIn() {
     e.preventDefault();
 
     try {
-      const fetchApi = async () => {
-        const response = await logIn({ userEmail: user, password: pwd });
-        const accessToken = response.accessToken;
-        const roles = response.roles;
+      const response = await logIn({ userEmail: user, password: pwd });
+      if (response.accessToken) {
+        const { accessToken, roles } = response;
         setAuth({ user, pwd, roles, accessToken });
         setUser("");
         setPwd("");
         setSuccess(true);
-      };
-
-      fetchApi();
+      } else {
+        if (response.status === 400) {
+          setErrMsg("Missing Username or Password");
+        } else if (response.status === 401) {
+          setErrMsg("Unauthorized");
+        } else {
+          setErrMsg("Login Failed");
+        }
+      }
     } catch (err) {
       if (!err?.response) {
         setErrMsg("No Server Response");
-      } else if (err.response?.status === 400) {
-        setErrMsg("Missing Username or Password");
-      } else if (err.response?.status === 401) {
-        setErrMsg("Unauthorized");
       } else {
         setErrMsg("Login Failed");
       }
-      errRef.current.focus();
     }
   };
 
   useEffect(() => {
     if (success) {
+      setSuccess(false);
       // window.location.href = "/";
       navigate("/");
     }
@@ -113,6 +113,14 @@ function LogIn() {
             </div>
 
             <button className={cx("form-submit", "button-89")}>Đăng Ký</button>
+
+            <span
+              className={cx("form-message")}
+              style={{ fontSize: "16px", fontWeight: "500" }}
+            >
+              <div className={cx("spacer")}></div>
+              {errMsg}
+            </span>
           </form>
         </div>
       </div>
