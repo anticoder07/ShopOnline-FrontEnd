@@ -10,7 +10,6 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     localStorage.setItem("auth", JSON.stringify(auth));
-    console.log(auth);
   }, [auth]);
 
   return (

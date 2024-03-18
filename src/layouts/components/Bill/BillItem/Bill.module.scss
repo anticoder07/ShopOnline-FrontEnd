@@ -4,6 +4,7 @@
   height: 82px;
   margin: 10px 0px;
   background-color: aliceblue;
+
   .product{
     display: flex;
     .picture{
@@ -15,8 +16,6 @@
     }
   }
 }
-
-
 
 .title{
   font-size: 17px;
@@ -41,7 +40,7 @@
 
 .total{
   margin: auto 0;
-  margin-right: 10px;
+  margin-right: 40px;
   font-size: 1.6rem;
   font-weight: 500;
 }
@@ -51,4 +50,15 @@
   margin-left: 10px;
   width: 17px;
   height: 17px;
+}
+
+.container{
+  display: flex;
+}
+
+.delete{
+  margin: auto 0;
+  margin-right: 10px;
+  color: red;
+  font-size: 15px;
 }

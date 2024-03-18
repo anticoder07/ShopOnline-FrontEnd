@@ -12,14 +12,12 @@ export const seeBasket = async () => {
 
 export const addProductToBasket = async (i, q, t) => {
   try {
-    const res = await request.post(
-      "api/basket/add",
-      { id: i, quantity: q, type: t },
-      {
-        headers: authHeader(),
-      }
-    );
-    console.log(res);
+    const res = await request.post("api/basket/add", {
+      id: i,
+      quantity: q,
+      type: t,
+      headers: authHeader(),
+    });
     return res.data;
   } catch (error) {
     console.log(error);
@@ -28,9 +26,13 @@ export const addProductToBasket = async (i, q, t) => {
 
 export const deleteProductToBasket = async (i) => {
   try {
-    const res = await request.get("basket/delete", {
-      param: i,
-    });
+    const res = await request.get(
+      "basket/delete",
+      {
+        param: i,
+      },
+      { headers: authHeader() }
+    );
     return res.data;
   } catch (error) {
     console.log(error);

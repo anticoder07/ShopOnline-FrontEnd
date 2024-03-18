@@ -94,6 +94,11 @@
   flex-wrap: wrap;
   width: 1200px;
   border-radius: 5px;
-
 }
 
+.notification {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

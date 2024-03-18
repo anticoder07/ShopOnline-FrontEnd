@@ -13,6 +13,7 @@ import Card from "../../../components/Card";
 import { useLocation } from "react-router-dom";
 import { getProductId } from "../../../services/TakeProductService";
 import { addProductToBasket } from "../../../services/BasketService";
+import NotificationCheck from "../Notification/NotificationCheck";
 
 const cx = classNames.bind(styles);
 
@@ -26,6 +27,8 @@ function InformationProduct() {
   const [cardItemsRecomment, setCardItemsRecomment] = useState([]);
   const [quantityIndex, setQuantityIndex] = useState(0);
   const [type, setType] = useState(null);
+
+  const [notificationAddBasket, setNotificationAddBasket] = useState(false);
 
   const handleQuantityIndexChange = (newIndex) => {
     setQuantityIndex(newIndex);
@@ -48,17 +51,47 @@ function InformationProduct() {
   }, []);
 
   const handleAddProductToBasket = () => {
-    try {
-      const fetchApi = async () => {
-        const res = await addProductToBasket(id, quantityIndex, type);
-        console.log(res);
-      };
+    if (quantityIndex === 0) {
+    } else {
+      if (attributes.length === 0) {
+        try {
+          const fetchApi = async () => {
+            const res = await addProductToBasket(id, quantityIndex, null);
+            setNotificationAddBasket(true);
+          };
 
-      fetchApi();
-    } catch (err) {
-      console.error(err);
+          fetchApi();
+        } catch (err) {
+          console.error(err);
+        }
+      } else {
+        if (type === null) {
+        } else {
+          try {
+            const fetchApi = async () => {
+              const res = await addProductToBasket(id, quantityIndex, type);
+              setNotificationAddBasket(true);
+            };
+
+            fetchApi();
+          } catch (err) {
+            console.error(err);
+          }
+        }
+      }
     }
   };
+
+  useEffect(() => {
+    let timeout;
+    if (notificationAddBasket) {
+      timeout = setTimeout(() => {
+        setNotificationAddBasket(false);
+      }, 1700);
+    }
+    return () => clearTimeout(timeout);
+  }, [notificationAddBasket]);
+
   const CARD_ITEMS = [];
 
   return (
@@ -146,6 +179,11 @@ function InformationProduct() {
         {CARD_ITEMS.map((item, index) => (
           <Card key={index} data={item} />
         ))}
+      </div>
+      <div className={cx("notification")}>
+        {notificationAddBasket && (
+          <NotificationCheck value={"Sản phẩm được thêm vào giỏ hàng"} />
+        )}
       </div>
     </>
   );

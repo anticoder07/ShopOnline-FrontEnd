@@ -1,0 +1,29 @@
+.wrapper{
+  height: 150px;
+  width: 300px;
+  background-color: rgba(100, 99, 99, 0.9);
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .icon{
+    font-size: 43px;
+    margin-bottom: 10px;
+  }
+  
+  .icon-check{
+    color: rgb(120, 212, 120);
+  }
+  
+  .icon-wrong{
+    color: rgb(239, 60, 60);
+  }
+
+  .value{
+    font-size: 16px;
+    font-weight: 400;
+    color: #ffffff;
+  }
+}
