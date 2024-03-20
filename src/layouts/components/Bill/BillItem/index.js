@@ -31,9 +31,15 @@ function BasketItem({
             checked={allCheck || check}
             onChange={(event) => {
               if (event.target.checked) {
-                handleChecked(data.total * data.quantity);
+                handleChecked({
+                  price: data.total * data.quantity,
+                  id: data.itemId,
+                });
               } else {
-                handleChecked(-data.total * data.quantity);
+                handleChecked({
+                  price: -data.total * data.quantity,
+                  id: data.itemId,
+                });
               }
             }}
           />

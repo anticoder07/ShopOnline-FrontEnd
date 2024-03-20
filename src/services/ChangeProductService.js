@@ -1,4 +1,5 @@
 import * as request from "../utils/request";
+import authHeader from "./authHeader";
 
 export const changeProduct = async (product) => {
   try {
@@ -11,7 +12,9 @@ export const changeProduct = async (product) => {
 
 export const addProduct = async (product) => {
   try {
-    const res = await request.post("product/add", product);
+    const res = await request.post("api/product/add", product, {
+      headers: authHeader(),
+    });
     return res.data;
   } catch (error) {
     console.log(error);

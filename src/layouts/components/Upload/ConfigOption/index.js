@@ -14,6 +14,8 @@ function ConfigOption({ onTypeListChange }) {
   const [image, setImage] = useState(null);
   const [typeName, setTypeName] = useState("");
   const [title, setTitle] = useState("");
+  const [quantity, setQuantity] = useState(0);
+  const [total, setTotal] = useState(null);
   const [typeList, setTypeList] = useState([]);
   const [indexChange, setIndexChange] = useState(-1);
 
@@ -34,6 +36,8 @@ function ConfigOption({ onTypeListChange }) {
         if (i === indexChange) {
           let type = {
             title: title,
+            quantity: quantity,
+            total: total,
             icon: <Image src={image} squareTypeOption />,
           };
           if (image === null) {
@@ -44,6 +48,8 @@ function ConfigOption({ onTypeListChange }) {
       });
       setTypeList(updatedTypeList);
       setIndexChange(-1);
+      setQuantity(0);
+      setTotal(null);
       setImage(null);
       setTitle("");
       return;
@@ -51,6 +57,8 @@ function ConfigOption({ onTypeListChange }) {
     if (title === "" || typeName === "") return;
     let type = {
       title: title,
+      quantity: quantity,
+      total: total,
       icon: <Image src={image} squareTypeOption />,
     };
     if (image === null) {
@@ -59,6 +67,8 @@ function ConfigOption({ onTypeListChange }) {
     setTypeList([...typeList, type]);
     setImage(null);
     setTitle("");
+    setQuantity(0);
+    setTotal(null);
   };
 
   const handleDeleteOption = (index) => {
@@ -79,7 +89,7 @@ function ConfigOption({ onTypeListChange }) {
   };
 
   useEffect(() => {
-    onTypeListChange(typeList);
+    onTypeListChange({ typeName, typeList });
   }, [typeList]);
 
   return (
@@ -125,6 +135,22 @@ function ConfigOption({ onTypeListChange }) {
           placeholder="Nhập tùy chọn"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
+        />
+        <input
+          type="text"
+          name="optionInput"
+          className={cx("option-input")}
+          placeholder="Giá kiểu"
+          value={total}
+          onChange={(e) => setTotal(e.target.value)}
+        />
+        <input
+          type="text"
+          name="optionInput"
+          className={cx("option-input")}
+          placeholder="Số lượng kiểu"
+          value={quantity}
+          onChange={(e) => setQuantity(e.target.value)}
         />
         <Button className={cx("save-btn")} onClick={addType}>
           Lưu

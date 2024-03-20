@@ -11,8 +11,8 @@ function InformationBasket({ takeValue, handleCancel }) {
   const [address, setAddress] = useState("");
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // Ngăn chặn hành vi mặc định của form
-    takeValue(name, phoneNumber, address); // Gọi hàm takeValue với các giá trị đã nhập
+    e.preventDefault();
+    takeValue(name, phoneNumber, address);
   };
 
   return (
@@ -23,8 +23,6 @@ function InformationBasket({ takeValue, handleCancel }) {
         </div>
         <div className={cx("spacer")}></div>
         <form className={cx("form block")} onSubmit={handleSubmit}>
-          {" "}
-          {/* Gọi hàm handleSubmit khi form được submit */}
           <div className={cx("form-group")}>
             <label htmlFor="fullname" className={cx("form-label")}>
               Tên Người Nhận
@@ -76,7 +74,11 @@ function InformationBasket({ takeValue, handleCancel }) {
           <button className={cx("form-submit")} onClick={handleCancel}>
             Hủy Đăng Kí
           </button>
-          <button className={cx("form-submit")} type="submit">
+          <button
+            className={cx("form-submit")}
+            // type="submit"
+            // onClick={handleSubmit}
+          >
             Xác nhận
           </button>
         </form>

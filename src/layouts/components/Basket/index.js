@@ -8,12 +8,15 @@ import Button from "../../../components/Button";
 import {
   deleteProductToBasket,
   seeBasket,
+  transportProductFromBasketToBill,
 } from "../../../services/BasketService";
 import InformationBasket from "./InformationBasket";
+import NotificationCheck from "../Notification/NotificationCheck";
 
 const cx = classNames.bind(styles);
 
 function Basket() {
+  const [checkBoxProduct, setCheckBoxProduct] = useState([]);
   const [name, setName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [address, setAddress] = useState("");
@@ -22,6 +25,7 @@ function Basket() {
   const [page, setPage] = useState([]);
   const [totalBasket, setTotalBasket] = useState(0);
   const [checkInformationBasket, setCheckInformationBasket] = useState(false);
+  const [notification, setNotification] = useState(false);
 
   useEffect(() => {
     try {
@@ -58,8 +62,13 @@ function Basket() {
     setSelectAllChecked(!selectAllChecked);
   };
 
-  const handlePriceChecked = (price) => {
+  const handlePriceChecked = ({ price, id }) => {
     setTotalBasket((prevTotalBasket) => prevTotalBasket + price);
+    if (price > 0) {
+      setCheckBoxProduct((prev) => [...prev, id]);
+    } else {
+      setCheckBoxProduct((prev) => prev.filter((i) => i !== id));
+    }
   };
 
   const handleOder = () => {
@@ -78,6 +87,35 @@ function Basket() {
       console.log(err);
     }
   };
+
+  const handleSubmit = (n, p, a) => {
+    try {
+      const fetchApi = async () => {
+        const res = await transportProductFromBasketToBill(
+          checkBoxProduct,
+          n,
+          p,
+          a
+        );
+        setPage(res);
+      };
+
+      fetchApi();
+      setNotification(true);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    let timeout;
+    if (notification) {
+      timeout = setTimeout(() => {
+        setNotification(false);
+      }, 1500);
+    }
+    return () => clearTimeout(timeout);
+  }, [notification]);
 
   return (
     <>
@@ -107,6 +145,7 @@ function Basket() {
           });
 
           const data = {
+            itemId: item.id,
             id: item.productDto.id,
             typeId: item.typeId,
             picture: item.productDto.picture,
@@ -120,7 +159,7 @@ function Basket() {
 
           return (
             <BillItem
-              key={`${item.id}-${item.typeId}`}
+              key={item.id}
               data={data}
               checkBtn
               check={check}
@@ -155,8 +194,12 @@ function Basket() {
           ></div>
           <div className={cx("information-wrapper")}>
             <InformationBasket
-              takeValue={(name, phoneNumber, address) => {
-                console.log("");
+              takeValue={(n, p, a) => {
+                setName(n);
+                setPhoneNumber(p);
+                setAddress(a);
+                handleSubmit(n, p, a);
+                setCheckInformationBasket(!checkInformationBasket);
               }}
               handleCancel={() => {
                 setCheckInformationBasket(!checkInformationBasket);
@@ -168,6 +211,11 @@ function Basket() {
           </div>
         </>
       )}
+      <div className={cx("notification")}>
+        {notification && (
+          <NotificationCheck value={"Cảm ơn quý khách hàng đã mua"} />
+        )}
+      </div>
     </>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import classNames from "classnames/bind";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -19,24 +19,27 @@ import Menu from "../../../components/Popper/Menu/Menu";
 import MenuItem from "../SideBar/Menu/MenuItem";
 import AuthContext from "../../../Context/AuthProvider";
 import { logOut } from "../../../services/AuthService";
+import { seeInformationHeader } from "../../../services/ProfileService";
 
 const cx = classNames.bind(styles);
 
 function Header({ visibleHeaderIndexing = true, visibleSearch = true }) {
-  const { auth } = useContext(AuthContext); // Lấy thông tin xác thực từ context
+  const [informationHeader, setInformationHeader] = useState({
+    avatar: "",
+    numberOfNotification: "",
+  });
 
+  const { auth, setAuth } = useContext(AuthContext);
   const { user, roles, accessToken } = auth;
 
-  const [currentUser, setCurrentUser] = useState(user); // Kiểm tra xem token đã đư
-  const currentAdmin = false;
-  if (roles === "admin") {
-    currentAdmin = true;
-  }
+  const [currentUser, setCurrentUser] = useState(user);
+  const currentAdmin = roles !== "admin";
 
   const handleLogOut = () => {
     try {
       const fetchApi = async () => {
-        const res = await logOut();
+        await logOut();
+        setAuth({});
         localStorage.clear();
       };
 
@@ -96,6 +99,24 @@ function Header({ visibleHeaderIndexing = true, visibleSearch = true }) {
       </div>
     ));
   };
+
+  useEffect(() => {
+    try {
+      const fetchApi = async () => {
+        const res = await seeInformationHeader();
+        if (res.status === 401) {
+          setCurrentUser(false);
+        } else {
+          setInformationHeader(res);
+        }
+      };
+
+      fetchApi();
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
+
   return (
     <header
       className={cx("wrapper", {
@@ -182,7 +203,7 @@ function Header({ visibleHeaderIndexing = true, visibleSearch = true }) {
                 ) : (
                   <div className={cx("nonDisplayMobile")}>
                     <Tippy
-                      content="2 Sản phẩm"
+                      content={`${informationHeader.numberOfNotification} Sản phẩm`}
                       className={cx("custom-tooltip")}
                     >
                       <Button
@@ -190,7 +211,7 @@ function Header({ visibleHeaderIndexing = true, visibleSearch = true }) {
                         text
                         white
                         large
-                        notificationNumber={"2"}
+                        notificationNumber={`${informationHeader.numberOfNotification}`}
                       >
                         <FontAwesomeIcon icon={faCartShopping} />
                       </Button>

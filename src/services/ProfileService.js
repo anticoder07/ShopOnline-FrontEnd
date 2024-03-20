@@ -1,6 +1,17 @@
 import * as request from "../utils/request";
 import authHeader from "./authHeader";
 
+export const seeInformationHeader = async () => {
+  try {
+    const res = await request.get("api/profile/header", {
+      headers: authHeader(),
+    });
+    return res.data;
+  } catch (error) {
+    return { status: error.response.status, data: error.response.data };
+  }
+};
+
 export const seeProfile = async () => {
   try {
     const res = await request.get("api/profile/see", { headers: authHeader() });

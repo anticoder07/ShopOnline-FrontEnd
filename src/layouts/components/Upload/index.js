@@ -1,15 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import classNames from "classnames/bind";
 
 import styles from "./Upload.module.scss";
 import images from "../../../assets/images";
 import Button from "../../../components/Button";
 import OptionsPopper from "./OptionsPopper";
+import { addProduct } from "../../../services/ChangeProductService";
+import NotificationCheck from "../Notification/NotificationCheck";
 
 const cx = classNames.bind(styles);
 
 function Upload() {
   const [image, setImage] = useState(null);
+  const [productName, setProductName] = useState("");
+  const [type, setType] = useState("");
+  const [price, setPrice] = useState(0);
+  const [quantity, setQuantity] = useState(0);
+  const [productType, setProductType] = useState([]);
+  const [description, setDescription] = useState("");
+
+  const [notificationAddBasket, setNotificationAddBasket] = useState(false);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -21,6 +31,54 @@ function Upload() {
       reader.readAsDataURL(file);
     }
   };
+
+  const handleSave = () => {
+    console.log(productType);
+    const attribute = productType.map((item) => {
+      return {
+        id: 1,
+        type: item.value.typeName,
+        ProductTypeItemDto: item.value.typeList.map((pti) => {
+          return {
+            id: 11,
+            price: pti.price,
+            quantity: pti.quantity,
+            sold: 0,
+            content: pti.title,
+          };
+        }),
+      };
+    });
+
+    try {
+      const fetchApi = async () => {
+        const res = await addProduct({
+          id: 1,
+          picture: "",
+          name: productName,
+          sold: 0,
+          quantity: quantity,
+          type: type,
+          description: description,
+          state: true,
+          priceMin: 100.0,
+          productTypeList: attribute,
+        });
+
+        setNotificationAddBasket(true);
+      };
+
+      fetchApi();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    setTimeout(() => {
+      setNotificationAddBasket(false);
+    }, 1500);
+  }, [notificationAddBasket]);
 
   return (
     <div className={cx("wrapper")}>
@@ -46,9 +104,19 @@ function Upload() {
             type="text"
             placeholder="Tên sản phẩm"
             className={cx("input-name")}
+            onChange={(e) => {
+              setProductName(e.target.value);
+            }}
           />
           <div className={cx("type")}>
-            <select name="type" id="typeSelect" className={cx("type-option")}>
+            <select
+              name="type"
+              id="typeSelect"
+              className={cx("type-option")}
+              onChange={(e) => {
+                setType(e.target.value);
+              }}
+            >
               <option value="DTPK">Điện thoại phụ kiện</option>
               <option value="MTLT">Máy tính laptop</option>
               <option value="MPCH">Mĩ phẩm chính hãng</option>
@@ -57,14 +125,32 @@ function Upload() {
             </select>
           </div>
           <div className={cx("total")}>
-            <label htmlFor="totalInput" className={cx("titleTotal")}>
-              Giá tiền
+            <label htmlFor="totalInput" className={cx("titleQuantity")}>
+              Có
             </label>
             <input
               type="text"
               id="totalInput"
               name="totalInput"
               className={cx("totalInput")}
+              onChange={(e) => {
+                setQuantity(Number(e.target.value));
+              }}
+            />
+            <span className={cx("titleTotal")}>Sản Phẩm</span>
+          </div>
+          <div className={cx("total")}>
+            <label htmlFor="totalInput" className={cx("titleTotal")}>
+              Giá tiền
+            </label>
+            <input
+              type="text"
+              name="totalInput"
+              className={cx("totalInput")}
+              onChange={(e) => {
+                setPrice(Number(e.target.value));
+                console.log(price);
+              }}
             />
             <span className={cx("titleTotal")}>VND</span>
           </div>
@@ -74,7 +160,7 @@ function Upload() {
       <div className={cx("option-popper")}>
         <OptionsPopper
           takeValue={(value) => {
-            console.log(value);
+            setProductType(value);
           }}
         />
       </div>
@@ -87,13 +173,24 @@ function Upload() {
           rows={15}
           cols={65}
           style={{ fontSize: "18px" }}
-          onChange={(e) => {}}
+          onChange={(e) => {
+            setDescription(e.target.value);
+          }}
         ></textarea>
       </div>
 
-      <Button primary style={{ fontSize: "20px", marginTop: "20px" }}>
+      <Button
+        primary
+        style={{ fontSize: "20px", marginTop: "20px" }}
+        onClick={handleSave}
+      >
         Thêm sản phẩm
       </Button>
+      <div className={cx("notification")}>
+        {notificationAddBasket && (
+          <NotificationCheck value={"Sản phẩm được thêm vào giỏ hàng"} />
+        )}
+      </div>
     </div>
   );
 }
