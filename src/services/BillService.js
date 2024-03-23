@@ -12,9 +12,14 @@ export const seeBill = async () => {
   }
 };
 
-export const setStateAdmin = async (inf) => {
+export const setStateAdmin = async (id, state) => {
   try {
-    const res = await request.get("bill/set-state/admin", inf);
+    const res = await request.get(`api/bill/set-state/admin/${id}`, {
+      params: {
+        state,
+      },
+      headers: authHeader(),
+    });
     return res.data;
   } catch (error) {
     console.log(error);
@@ -23,7 +28,7 @@ export const setStateAdmin = async (inf) => {
 
 export const setStateUser = async (inf) => {
   try {
-    const res = await request.get("bill/set-state", inf);
+    const res = await request.get("api/bill/set-state", inf);
     return res.data;
   } catch (error) {
     console.log(error);

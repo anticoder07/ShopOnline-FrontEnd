@@ -56,9 +56,10 @@ function Profile() {
       };
 
       fetchApi();
-    } catch (err) {}
+    } catch (err) {
+      console.log(err);
+    }
   };
-
   useEffect(() => {
     console.log(pwd);
   }, [pwd]);

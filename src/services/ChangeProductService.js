@@ -10,9 +10,10 @@ export const changeProduct = async (product) => {
   }
 };
 
-export const addProduct = async (product) => {
+export const addProduct = async (data) => {
+  console.log(data);
   try {
-    const res = await request.post("api/product/add", product, {
+    const res = await request.post("api/product/add", data, {
       headers: authHeader(),
     });
     return res.data;

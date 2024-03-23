@@ -76,19 +76,19 @@ function Header({ visibleHeaderIndexing = true, visibleSearch = true }) {
     },
     {
       title: "Máy tính - Laptop",
-      to: "/may-tinh-laptop",
+      to: "/may-tinh-lap-top",
     },
     {
       title: "Mỹ phẩm chính hãng",
-      to: "/my-pham",
+      to: "/my-pham-chinh-hang",
     },
     {
       title: "Thời trang nam nữ",
-      to: "/thoi-trang",
+      to: "/thoi-trang-nam-nu",
     },
     {
       title: "Sản phẩm khác",
-      to: "/other",
+      to: "/san-pham-khac",
     },
   ];
 

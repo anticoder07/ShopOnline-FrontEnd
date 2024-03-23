@@ -29,19 +29,66 @@ function Upload() {
         setImage(reader.result);
       };
       reader.readAsDataURL(file);
+      setImage(file);
     }
   };
 
+  // const handleSave = () => {
+  //   const attribute = productType.map((item) => {
+  //     const productTypeItemDtoList = item.value.typeList.map((pti) => {
+  //       return {
+  //         id: 11,
+  //         picture: "",
+  //         price: Number(pti.total),
+  //         quantity: Number(pti.quantity),
+  //         sold: 0,
+  //         content: pti.title,
+  //         pictureFile: pti.image,
+  //       };
+  //     });
+  //     return {
+  //       id: 1,
+  //       type: item.value.typeName,
+  //       productTypeItemDtoList: [...productTypeItemDtoList],
+  //     };
+  //   });
+
+  //   try {
+  //     const fetchApi = async () => {
+  //       const res = await addProduct({
+  //         id: 1,
+  //         picture: "",
+  //         name: productName,
+  //         sold: 0,
+  //         quantity: quantity,
+  //         type: type,
+  //         description: description,
+  //         state: true,
+  //         priceMin: price,
+  //         productTypeList: attribute,
+  //         pictureFile: image,
+  //       });
+
+  //       setNotificationAddBasket(true);
+  //     };
+
+  //     fetchApi();
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
   const handleSave = () => {
-    console.log(productType);
     const attribute = productType.map((item) => {
       return {
         id: 1,
         type: item.value.typeName,
-        ProductTypeItemDto: item.value.typeList.map((pti) => {
+        productTypeItemDtoList: item.value.typeList.map((pti) => {
+          console.log(pti);
           return {
             id: 11,
-            price: pti.price,
+            picture: "",
+            price: Number(pti.total),
             quantity: pti.quantity,
             sold: 0,
             content: pti.title,
@@ -54,14 +101,14 @@ function Upload() {
       const fetchApi = async () => {
         const res = await addProduct({
           id: 1,
-          picture: "",
+          picture: image,
           name: productName,
           sold: 0,
           quantity: quantity,
           type: type,
           description: description,
           state: true,
-          priceMin: 100.0,
+          priceMin: price,
           productTypeList: attribute,
         });
 
@@ -149,7 +196,6 @@ function Upload() {
               className={cx("totalInput")}
               onChange={(e) => {
                 setPrice(Number(e.target.value));
-                console.log(price);
               }}
             />
             <span className={cx("titleTotal")}>VND</span>

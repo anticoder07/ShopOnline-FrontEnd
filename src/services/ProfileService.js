@@ -43,13 +43,32 @@ export const changePasswordProfile = async (password) => {
   }
 };
 
+// export const changeAvatarProfile = async (avatar) => {
+//   try {
+//     const res = await request.post("api/profile/change/avatar", avatar, {
+//       headers: authHeader(),
+//     });
+//     return res.data;
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
+
 export const changeAvatarProfile = async (avatar) => {
+  console.log(avatar);
   try {
-    const res = await request.post("api/profile/change/avatar", avatar, {
-      headers: authHeader(),
-    });
+    const res = await request.post(
+      "api/profile/change/avatar",
+      {
+        base64String: avatar,
+      },
+      {
+        headers: authHeader(),
+      }
+    );
+
     return res.data;
   } catch (error) {
-    console.log(error);
+    console.log("Error:", error.response ? error.response.data : error);
   }
 };

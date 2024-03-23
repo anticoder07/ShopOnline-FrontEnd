@@ -1,37 +1,34 @@
 import React, { useEffect, useState } from "react";
 import classNames from "classnames/bind";
-
-import styles from "./Pagination.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronLeft,
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 
+import styles from "./Pagination.module.scss";
+
 const cx = classNames.bind(styles);
 
-function Pagination({ totalPages, onPageChange, className }) {
+function Pagination({ totalPages, getCurrentPage, className }) {
   const [currentPage, setCurrentPage] = useState(1);
-
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const pageParam = parseInt(urlParams.get("page")) || 1;
-    setCurrentPage(pageParam);
-  }, []);
-
   const handlePageChange = (page, left = false, right = false) => {
     if ((left && currentPage === 1) || (right && currentPage === totalPages)) {
       return;
     }
     setCurrentPage(page);
-    onPageChange(page);
   };
+
+  useEffect(() => {
+    getCurrentPage(currentPage);
+  }, [currentPage, getCurrentPage]);
 
   const renderPaginationItems = () => {
     const paginationItems = [];
 
     paginationItems.push(
       <span
+        key={"arrow-left"}
         className={cx("arrow", "arrow-left")}
         onClick={() => handlePageChange(currentPage - 1, true)}
       >
@@ -157,6 +154,7 @@ function Pagination({ totalPages, onPageChange, className }) {
 
     paginationItems.push(
       <span
+        key={"arrow-right"}
         className={cx("arrow", "arrow-right")}
         onClick={() => handlePageChange(currentPage + 1, false, true)}
       >

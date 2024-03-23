@@ -6,16 +6,36 @@ import styles from "./MenuItem.module.scss";
 
 const cx = classNames.bind(styles);
 
-function MenuItem({ title, to, icon, center = false }) {
+function MenuItem({ title, to, icon, center = false, onClick, ...passProps }) {
+  let Component = "div";
+
   const classes = cx("menu-item", {
     center,
   });
 
+  const props = {
+    onClick,
+    ...passProps,
+  };
+
+  if (to) {
+    Component = NavLink;
+    props["to"] = to;
+  }
+
   return (
-    <NavLink className={(nav) => cx(classes, { active: nav.isActive })} to={to}>
+    <Component
+      className={(nav) => {
+        const combinedClasses = cx(classes);
+        return nav.isActive
+          ? cx(combinedClasses, { active: true })
+          : combinedClasses;
+      }}
+      {...props}
+    >
       <span className={cx("icon")}>{icon}</span>
       <span className={cx("title")}>{title}</span>
-    </NavLink>
+    </Component>
   );
 }
 

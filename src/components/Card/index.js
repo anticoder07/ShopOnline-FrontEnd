@@ -8,7 +8,6 @@ import { NavLink } from "react-router-dom";
 const cx = classNames.bind(styles);
 
 function Card({ data }) {
-  console.log(data);
   return (
     <NavLink
       to={`/by/id?i=${data.id}`}

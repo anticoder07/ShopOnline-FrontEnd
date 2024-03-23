@@ -10,6 +10,36 @@ import LogIn from "../pages/LogInSignUp/LogIn";
 import InformationProduct from "../layouts/components/Product/InformationProduct";
 import NoHeaderLayout from "../layouts/NoSearchHeaderLayout";
 
+const SIDEBAR_ITEMS = [
+  {
+    to: "dien-thoai-phu-kien",
+  },
+  {
+    to: "may-tinh-lap-top",
+  },
+  {
+    to: "my-pham-chinh-hang",
+  },
+  {
+    to: "thoi-trang-nam-nu",
+  },
+  {
+    to: "san-pham-khac",
+  },
+  {
+    to: "hoan-thanh",
+  },
+  {
+    to: "van-chuyen",
+  },
+  {
+    to: "can-xu-ly",
+  },
+  {
+    to: "tat-ca",
+  },
+];
+
 const publicRouter = [
   { path: "/", component: Home },
   { path: "/dang-ki", component: SignUp, layout: NoHeaderLayout },
@@ -20,13 +50,17 @@ const publicRouter = [
   { path: "/gio-hang", component: Basket },
   { path: "/profile", component: Profile },
   { path: "/them-san-pham", component: Upload, layout: NoSearchHeaderLayout },
-  { path: `http://localhost:3000//?page=`, Component: Home },
-  { path: `/trang-chu`, Component: Home },
+  { path: `/?page=`, component: Home },
+  { path: `/trang-chu`, component: Home },
+  ...SIDEBAR_ITEMS.map((item) => ({
+    path: `/${item.to}`,
+    component: Home,
+  })),
 ];
 
 for (let page = 1; page <= 1000; page++) {
   const path = `/?page=${page}`;
-  publicRouter.push({ path, Component: Home });
+  publicRouter.push({ path, component: Home });
 }
 
 const privateRouter = [];

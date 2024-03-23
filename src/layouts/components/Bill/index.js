@@ -12,29 +12,35 @@ const cx = classNames.bind(styles);
 
 function Bill() {
   const [page, setPage] = useState([]);
-  const BASKEt_ITEMS = [
-    {
+  const [optionBill, setOptionBill] = useState("ALL");
+  const BASKET_ITEMS = {
+    ALL: {
       title: "Tất cả",
-      to: "/dien-thoai-phu-kien",
+      to: "/tat-ca",
     },
-    {
+    TRANSPORT: {
       title: "Vận chuyển",
-      to: "/may-tinh-laptop",
+      to: "/thong-tin-don-mua",
     },
-    {
+    COMPLETE: {
       title: "Hoành thành",
-      to: "/my-pham",
+      to: "/thong-tin-don-mua",
     },
-    {
+    CANCELLED: {
       title: "Đã hủy",
-      to: "/thoi-trang",
+      to: "/thong-tin-don-mua",
     },
-  ];
+  };
 
   const renderItem = () => {
-    return BASKEt_ITEMS.map((item, index) => (
-      <div className={cx("basket-item")} key={index}>
-        <MenuItem title={item.title} to={item.to} icon={item.icon} center />
+    return Object.keys(BASKET_ITEMS).map((KeyOption) => (
+      <div className={cx("basket-item")} key={KeyOption}>
+        <MenuItem
+          title={BASKET_ITEMS[KeyOption].title}
+          to={BASKET_ITEMS[KeyOption].to}
+          icon={BASKET_ITEMS[KeyOption].icon}
+          center
+        />
       </div>
     ));
   };
@@ -59,89 +65,70 @@ function Bill() {
           gray
         />
       </div>
-      {page.map((item) => (
-        <div key={item.id} className={cx("basket-content")}>
-          <h2 className={cx("DateOfPurchase")}>
-            Ngày mua: {item.purchasedDate.split("T")[0]}
-          </h2>
-          {console.log(item)}
-          {item.productsList.map((product) => {
-            return (
-              <BillItem
-                data={{
-                  id: product.products.id,
-                  typeId: "hello",
-                  picture: product.products.picture,
-                  name: product.products.name,
-                  type: product.type,
-                  quantity: product.quantity,
-                  total: product.oldPrice,
-                }}
-                deleteButton={false}
-              />
-            );
-          })}
-          <div className={cx("status")}>
-            <div className={cx("information")}>
-              <div className={cx("name")}>
-                Họ và tên: <span className={cx("message")}>{item.name}</span>
+      {page.map((item) => {
+        const stateBillMap = {
+          PENDING_APPROVAL: "Đang xét duyệt",
+          PREPARING_FOR_DELIVERY: "Chuẩn bị giao hàng",
+          DELIVERING: "Đang giao hàng",
+          DELIVERED: "Đã giao hàng",
+          RECEIVED: "Đã nhận hàng",
+        };
+        return (
+          <div key={item.id} className={cx("basket-content")}>
+            <h2 className={cx("DateOfPurchase")}>
+              Ngày : {item.purchasedDate.split("T")[0]}
+            </h2>
+            {item.productsList.map((product) => {
+              return (
+                <BillItem
+                  data={{
+                    id: product.products.id,
+                    typeId: "hello",
+                    picture: product.products.picture,
+                    name: product.products.name,
+                    type: product.type,
+                    quantity: product.quantity,
+                    total: product.oldPrice,
+                  }}
+                  deleteButton={false}
+                />
+              );
+            })}
+            <div className={cx("status")}>
+              <div className={cx("information")}>
+                <div className={cx("name")}>
+                  Họ và tên: <span className={cx("message")}>{item.name}</span>
+                </div>
+                <div className={cx("phone-number")}>
+                  Số điện thoại:{" "}
+                  <span className={cx("message")}>{item.phoneNumber}</span>
+                </div>
+                <div className={cx("address")}>
+                  Địa chỉ: <span className={cx("message")}>{item.address}</span>
+                </div>
               </div>
-              <div className={cx("phone-number")}>
-                Số điện thoại:{" "}
-                <span className={cx("message")}>{item.phoneNumber}</span>
-              </div>
-              <div className={cx("address")}>
-                Địa chỉ: <span className={cx("message")}>{item.address}</span>
-              </div>
-            </div>
-            <div className={cx("action")}>
               <div className={cx("delivery")}>
-                {item.stateBill === "PENDING_APPROVAL" && (
-                  <Button
-                    primary
-                    style={{ borderRadius: "5px", marginBottom: "10px" }}
-                  >
-                    Đang xét duyệt
-                  </Button>
-                )}
-                {item.stateBill === "PREPARING_FOR_DELIVERY" && (
-                  <Button
-                    primary
-                    style={{ borderRadius: "5px", marginBottom: "10px" }}
-                  >
-                    Chuẩn bị giao hàng
-                  </Button>
-                )}
-                {item.stateBill === "DELIVERING" && (
-                  <Button
-                    primary
-                    style={{ borderRadius: "5px", marginBottom: "10px" }}
-                  >
-                    Đang giao hàng
-                  </Button>
-                )}
-                {item.stateBill === "DELIVERED" && (
-                  <Button
-                    primary
-                    style={{ borderRadius: "5px", marginBottom: "10px" }}
-                  >
-                    Đã giao hàng
-                  </Button>
-                )}
-                {item.stateBill === "RECEIVED" && (
-                  <Button
-                    primary
-                    style={{ borderRadius: "5px", marginBottom: "10px" }}
-                  >
-                    Đã nhận hàng
-                  </Button>
-                )}
+                <div className={cx("action")}>
+                  <div className={cx("total")}>{item.total} VND</div>
+                  {Object.keys(stateBillMap).map(
+                    (key) =>
+                      item.stateBill === key && (
+                        <Button
+                          key={key}
+                          // onClick={}
+                          primary
+                          className={cx("state-btn")}
+                        >
+                          {stateBillMap[key]}
+                        </Button>
+                      )
+                  )}
+                </div>
               </div>
-              <div className={cx("total")}>{item.total} VND</div>
             </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
     </>
   );
 }

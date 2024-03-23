@@ -23,4 +23,13 @@ export const post = async (path, data, options = {}) => {
   }
 };
 
+export const postForm = async (path, data, options = {}) => {
+  try {
+    const response = await request.postForm(path, data, options);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export default request;
