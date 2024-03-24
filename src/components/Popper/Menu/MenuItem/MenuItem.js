@@ -7,13 +7,10 @@ import Button from "../../../Button";
 const cx = classNames.bind(styles);
 
 function MenuItem({ data, onClick }) {
-  const classes = cx(
-    "menu-item",
-    {
-      separate: data.separate,
-    },
-    { color: data.isActive ? "greenyellow" : "white" }
-  );
+  const classes = cx("menu-item", {
+    separate: data.separate,
+    color: data.isActive ? "greenyellow" : "white",
+  });
 
   return (
     <Button

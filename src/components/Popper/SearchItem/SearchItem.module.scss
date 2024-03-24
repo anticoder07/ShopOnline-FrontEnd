@@ -1,0 +1,26 @@
+.wrapper{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: var(--default-width-search);
+  text-decoration: none;
+  font-size: 17px;
+  font-weight: 500;
+  color: black;
+  margin: 3px 0px;
+  padding:8px 0px;
+
+  &:hover{
+    background-color: rgba(78, 75, 75, 0.09);
+  }
+
+  .picture{
+    padding-top: 4px;
+    margin-left: 15px;
+  }
+  
+  .title{
+    padding: 0px 10px;
+  }
+}
+

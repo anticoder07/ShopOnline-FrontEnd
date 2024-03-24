@@ -33,7 +33,7 @@ function Header({ visibleHeaderIndexing = true, visibleSearch = true }) {
   const { user, roles, accessToken } = auth;
 
   const [currentUser, setCurrentUser] = useState(user);
-  const currentAdmin = roles !== "admin";
+  const currentAdmin = roles === "admin";
 
   const handleLogOut = () => {
     try {

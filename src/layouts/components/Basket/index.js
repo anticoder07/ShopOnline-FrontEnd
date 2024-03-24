@@ -27,11 +27,18 @@ function Basket() {
   const [checkInformationBasket, setCheckInformationBasket] = useState(false);
   const [notification, setNotification] = useState(false);
 
+  const handleSearch = (value) => {
+    setPage(value);
+  };
+
   useEffect(() => {
     try {
       const fetchApi = async () => {
         const res = await seeBasket();
         setPage(res);
+        if (res === undefined) {
+          setPage([]);
+        }
       };
       fetchApi();
     } catch (err) {}
@@ -121,7 +128,12 @@ function Basket() {
     <>
       <div className={cx("wrapper")}>
         <h1 className={cx("title")}>Giỏ hàng của bạn</h1>
-        <Search placeholder="Bạn có thể tìm kiếm theo tên sản phẩm" gray />
+        <Search
+          placeholder="Bạn có thể tìm kiếm theo tên sản phẩm"
+          gray
+          searchBasket
+          handleSearchValue={(res) => setPage(res)}
+        />
       </div>
       <div className={cx("basket-content")}>
         <div className={cx("select-all")} onClick={handleSelectAllChange}>

@@ -28,7 +28,11 @@ function InformationProduct() {
   const [quantityIndex, setQuantityIndex] = useState(0);
   const [type, setType] = useState(null);
 
-  const [notificationAddBasket, setNotificationAddBasket] = useState(false);
+  const [notificationAddBasket, setNotificationAddBasket] = useState({
+    active: false,
+    emotion: false,
+    content: "Có lỗi đã xảy ra",
+  });
 
   const handleQuantityIndexChange = (newIndex) => {
     setQuantityIndex(newIndex);
@@ -48,16 +52,25 @@ function InformationProduct() {
     } catch (err) {
       console.error(err);
     }
-  }, []);
+  }, [id]);
 
   const handleAddProductToBasket = () => {
     if (quantityIndex === 0) {
+      setNotificationAddBasket({
+        active: true,
+        emotion: false,
+        content: "Vui lòng chọn số lượng sản phẩm",
+      });
     } else {
       if (attributes.length === 0) {
         try {
           const fetchApi = async () => {
             const res = await addProductToBasket(id, quantityIndex, null);
-            setNotificationAddBasket(true);
+            setNotificationAddBasket({
+              active: true,
+              emotion: true,
+              content: "Sản phẩm được thêm vào giỏ hàng",
+            });
           };
 
           fetchApi();
@@ -66,11 +79,20 @@ function InformationProduct() {
         }
       } else {
         if (type === null) {
+          setNotificationAddBasket({
+            active: true,
+            emotion: false,
+            content: "Vui lòng chọn kiểu sản phẩm",
+          });
         } else {
           try {
             const fetchApi = async () => {
               const res = await addProductToBasket(id, quantityIndex, type);
-              setNotificationAddBasket(true);
+              setNotificationAddBasket({
+                active: true,
+                emotion: true,
+                content: "Sản phẩm được thêm vào giỏ hàng",
+              });
             };
 
             fetchApi();
@@ -86,8 +108,12 @@ function InformationProduct() {
     let timeout;
     if (notificationAddBasket) {
       timeout = setTimeout(() => {
-        setNotificationAddBasket(false);
-      }, 1700);
+        setNotificationAddBasket({
+          active: false,
+          emotion: false,
+          content: "Có lỗi đã xảy ra",
+        });
+      }, 1000);
     }
     return () => clearTimeout(timeout);
   }, [notificationAddBasket]);
@@ -181,8 +207,11 @@ function InformationProduct() {
         ))}
       </div>
       <div className={cx("notification")}>
-        {notificationAddBasket && (
-          <NotificationCheck value={"Sản phẩm được thêm vào giỏ hàng"} />
+        {notificationAddBasket.active && (
+          <NotificationCheck
+            check={notificationAddBasket.emotion}
+            value={notificationAddBasket.content}
+          />
         )}
       </div>
     </>

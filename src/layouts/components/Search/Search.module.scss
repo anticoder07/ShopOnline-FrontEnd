@@ -58,3 +58,15 @@
     left: -220px;
   }
 }
+
+.wrapper-search{
+  position: relative;
+  width: var(--default-width-search);
+  padding: 6px 0px;
+  border-radius: 8px;
+  background: var(--white);
+  display: flex;
+  flex-direction: column;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  left: -5%;
+}
