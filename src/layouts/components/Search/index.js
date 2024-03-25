@@ -12,13 +12,16 @@ import {
   searchAllProducts,
   searchAllProductsBasket,
 } from "../../../services/SearchService";
+import { seeBasket } from "../../../services/BasketService";
 
 const cx = classNames.bind(styles);
 
 function Search({
   placeholder = "Tìm Kiếm",
   gray = false,
-  searchBasket = false,
+  customSearchNotRender = false,
+  activityNoValue,
+  activity,
   handleSearchValue,
 }) {
   const [searchValue, setSearchValue] = useState("");
@@ -32,15 +35,19 @@ function Search({
   });
 
   useEffect(() => {
-    if (!debounced.trim()) {
+    if (!debounced.trim() && !customSearchNotRender) {
       return;
     }
 
     try {
-      if (searchBasket) {
+      if (customSearchNotRender) {
         const fetchApi = async () => {
-          const res = await searchAllProductsBasket(debounced);
-          setSearchResult(res);
+          let res = [];
+          if (!debounced.trim()) {
+            res = await activityNoValue();
+          } else {
+            res = await activity(debounced);
+          }
           handleSearchValue(res);
         };
         fetchApi();
@@ -59,11 +66,11 @@ function Search({
   return (
     <HeadlessTippy
       interactive
-      visible={showResult && searchResult.length > 0 && !searchBasket}
+      visible={showResult && searchResult.length > 0 && !customSearchNotRender}
       render={(attrs) => (
         <div className={cx("search-result")} tabIndex="-1" {...attrs}>
           <Wrapper
-            children={searchResult.map((result) => (
+            children={searchResult.slice(0, 10).map((result) => (
               <SearchItem data={result} />
             ))}
             className={cx("wrapper-search")}

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
 import classNames from "classnames/bind";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -19,21 +19,21 @@ import Menu from "../../../components/Popper/Menu/Menu";
 import MenuItem from "../SideBar/Menu/MenuItem";
 import AuthContext from "../../../Context/AuthProvider";
 import { logOut } from "../../../services/AuthService";
+import VarGlobal from "../../../Context/VarGlobalProvider";
 import { seeInformationHeader } from "../../../services/ProfileService";
 
 const cx = classNames.bind(styles);
 
 function Header({ visibleHeaderIndexing = true, visibleSearch = true }) {
-  const [informationHeader, setInformationHeader] = useState({
-    avatar: "",
-    numberOfNotification: "",
-  });
+  const { variable } = useContext(VarGlobal);
+
+  const informationHeader = variable;
 
   const { auth, setAuth } = useContext(AuthContext);
   const { user, roles, accessToken } = auth;
 
   const [currentUser, setCurrentUser] = useState(user);
-  const currentAdmin = roles === "admin";
+  const currentAdmin = roles === "ADMI";
 
   const handleLogOut = () => {
     try {
@@ -41,6 +41,7 @@ function Header({ visibleHeaderIndexing = true, visibleSearch = true }) {
         await logOut();
         setAuth({});
         localStorage.clear();
+        window.location.href = "/dang-nhap";
       };
 
       fetchApi();
@@ -104,17 +105,10 @@ function Header({ visibleHeaderIndexing = true, visibleSearch = true }) {
     try {
       const fetchApi = async () => {
         const res = await seeInformationHeader();
-        if (res.status === 401) {
-          setCurrentUser(false);
-        } else {
-          setInformationHeader(res);
+        if (variable === null) {
         }
       };
-
-      fetchApi();
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (e) {}
   }, []);
 
   return (
@@ -136,13 +130,13 @@ function Header({ visibleHeaderIndexing = true, visibleSearch = true }) {
           <div
             style={{ display: "flex", alignItems: "center", padding: "auto" }}
           >
-            <Search />
+            <Search handleSearchValue={undefined} />
             <div
               style={{ position: "relative", right: "10px" }}
               className={cx("displayMobile")}
             >
               <Menu items={USER_ITEMS}>
-                <Image src="/" alt="avatar" avatar />
+                <Image src={informationHeader.avatar} alt="avatar" avatar />
               </Menu>
             </div>
           </div>
@@ -221,7 +215,7 @@ function Header({ visibleHeaderIndexing = true, visibleSearch = true }) {
               </div>
               <div className={cx("nonDisplayMobile")}>
                 <Menu items={USER_ITEMS}>
-                  <Image src="/" alt="avatar" avatar />
+                  <Image src={informationHeader.avatar} alt="avatar" avatar />
                 </Menu>
               </div>
             </>

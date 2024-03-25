@@ -14,7 +14,7 @@ const cx = classNames.bind(styles);
 function PurchaseOrder() {
   const [page, setPage] = useState([]);
   const [showStateProduct, setShowStateProduct] = useState(false);
-  const [productCurrent, setProductCurrent] = useState(null);
+  const [productCurrent, setProductCurrent] = useState();
   const [optionPurchaseOrder, setOptionPurchaseOrder] = useState("ALL");
 
   const BASKET_ITEMS = {
@@ -57,13 +57,13 @@ function PurchaseOrder() {
 
   const handleButtonClick = (id) => {
     setShowStateProduct(true);
-    setProductCurrent(id - 1);
+    setProductCurrent(id);
   };
 
-  const handleUpdateStateProduct = (id, state) => {
+  const handleUpdateStateProduct = (state) => {
     try {
       const fetchApi = async () => {
-        const res = await setStateAdmin(id, state);
+        const res = await setStateAdmin(productCurrent, state);
         setPage(res);
         console.log(res);
       };

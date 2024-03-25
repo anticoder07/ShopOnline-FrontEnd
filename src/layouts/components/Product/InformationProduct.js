@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import classNames from "classnames/bind";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
@@ -10,14 +10,23 @@ import Quantity from "../../../components/Quantity";
 import Option from "./Option";
 import Sold from "./Sold";
 import Card from "../../../components/Card";
-import { useLocation } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { getProductId } from "../../../services/TakeProductService";
 import { addProductToBasket } from "../../../services/BasketService";
 import NotificationCheck from "../Notification/NotificationCheck";
+import VarGlobal from "../../../Context/VarGlobalProvider";
+import AuthContext from "../../../Context/AuthProvider";
+import { deleteProduct } from "../../../services/ChangeProductService";
 
 const cx = classNames.bind(styles);
 
 function InformationProduct() {
+  const { variable, setVariable } = useContext(VarGlobal);
+  const { auth } = useContext(AuthContext);
+  const { user, roles, accessToken } = auth;
+
+  const currentAdmin = roles === "ADMI";
+
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const id = queryParams.get("i");
@@ -55,11 +64,11 @@ function InformationProduct() {
   }, [id]);
 
   const handleAddProductToBasket = () => {
-    if (quantityIndex === 0) {
+    if (quantityIndex === 0 || quantityIndex > inforProduct.quantity) {
       setNotificationAddBasket({
         active: true,
         emotion: false,
-        content: "Vui lòng chọn số lượng sản phẩm",
+        content: "Vui lòng chọn đúng số lượng sản phẩm",
       });
     } else {
       if (attributes.length === 0) {
@@ -70,6 +79,10 @@ function InformationProduct() {
               active: true,
               emotion: true,
               content: "Sản phẩm được thêm vào giỏ hàng",
+            });
+            setVariable({
+              numberOfNotification: variable.numberOfNotification + 1,
+              avatar: variable.avatar,
             });
           };
 
@@ -93,6 +106,10 @@ function InformationProduct() {
                 emotion: true,
                 content: "Sản phẩm được thêm vào giỏ hàng",
               });
+              setVariable({
+                numberOfNotification: variable.numberOfNotification + 1,
+                avatar: variable.avatar,
+              });
             };
 
             fetchApi();
@@ -102,6 +119,30 @@ function InformationProduct() {
         }
       }
     }
+  };
+
+  const handleDeleteProduct = () => {
+    try {
+      const fetchApi = async () => {
+        const res = await deleteProduct(id);
+        if (res) {
+          setNotificationAddBasket({
+            active: true,
+            emotion: true,
+            content: "Sản phẩm đã được xóa",
+          });
+          window.location.href = "/";
+        } else {
+          setNotificationAddBasket({
+            active: true,
+            emotion: true,
+            content: "Sản phẩm không thể xóa được",
+          });
+        }
+      };
+
+      fetchApi();
+    } catch (e) {}
   };
 
   useEffect(() => {
@@ -146,12 +187,13 @@ function InformationProduct() {
                   title={attributeItem.type}
                   items={attributeItem.productTypeItemDtoList.map((item) => {
                     const optionItem = { title: item.content };
-                    if (item.picture !== null) {
+                    if (item.picture !== null && item.picture !== "") {
                       optionItem.icon = (
                         <Image src={item.picture} squareTypeOption />
                       );
                     }
                     optionItem.id = item.id;
+                    optionItem.active = item.id === type;
                     return optionItem;
                   })}
                   returnValue={(item, value) => {
@@ -189,6 +231,26 @@ function InformationProduct() {
                 Mua Ngay
               </Button>
             </div>
+            {currentAdmin && (
+              <div style={{ margin: "20px" }}>
+                <NavLink
+                  style={{ fontSize: "20px", color: "black", margin: "20px" }}
+                  to={`/chinh-sua-san-pham?i=${id}`}
+                >
+                  Chỉnh sửa sản phẩm
+                </NavLink>
+                <span
+                  style={{
+                    padding: "0px 40px",
+                    fontSize: "20px",
+                    cursor: "pointer",
+                  }}
+                  onClick={handleDeleteProduct}
+                >
+                  Xóa sản phẩm
+                </span>
+              </div>
+            )}
           </div>
         </div>
       </div>

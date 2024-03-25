@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import classNames from "classnames/bind";
 
 import styles from "./Basket.module.scss";
@@ -12,10 +12,14 @@ import {
 } from "../../../services/BasketService";
 import InformationBasket from "./InformationBasket";
 import NotificationCheck from "../Notification/NotificationCheck";
+import { searchAllProductsBasket } from "../../../services/SearchService";
+import VarGlobal from "../../../Context/VarGlobalProvider";
 
 const cx = classNames.bind(styles);
 
 function Basket() {
+  const { variable, setVariable } = useContext(VarGlobal);
+
   const [checkBoxProduct, setCheckBoxProduct] = useState([]);
   const [name, setName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -27,15 +31,12 @@ function Basket() {
   const [checkInformationBasket, setCheckInformationBasket] = useState(false);
   const [notification, setNotification] = useState(false);
 
-  const handleSearch = (value) => {
-    setPage(value);
-  };
-
   useEffect(() => {
     try {
       const fetchApi = async () => {
         const res = await seeBasket();
         setPage(res);
+        console.log(res);
         if (res === undefined) {
           setPage([]);
         }
@@ -87,6 +88,10 @@ function Basket() {
       const fetchApi = async () => {
         const res = await deleteProductToBasket(id);
         setPage(res);
+        setVariable({
+          numberOfNotification: variable.numberOfNotification - 1,
+          avatar: variable.avatar,
+        });
       };
 
       fetchApi();
@@ -105,6 +110,10 @@ function Basket() {
           a
         );
         setPage(res);
+        setVariable({
+          numberOfNotification: variable.numberOfNotification - 1,
+          avatar: variable.avatar,
+        });
       };
 
       fetchApi();
@@ -131,7 +140,9 @@ function Basket() {
         <Search
           placeholder="Bạn có thể tìm kiếm theo tên sản phẩm"
           gray
-          searchBasket
+          customSearchNotRender
+          activityNoValue={seeBasket}
+          activity={(e) => searchAllProductsBasket(e)}
           handleSearchValue={(res) => setPage(res)}
         />
       </div>
@@ -146,7 +157,7 @@ function Basket() {
         </div>
         {page.map((item) => {
           const productTypeList = item.productDto.productTypeList;
-          let price = 0;
+          let price = item.productDto.priceMin;
           productTypeList.forEach((element) => {
             const productType = element.productTypeItemDtoList;
             productType.forEach((type) => {

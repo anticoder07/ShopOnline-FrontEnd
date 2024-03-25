@@ -36,7 +36,7 @@ function LogIn() {
       const response = await logIn({ userEmail: user, password: pwd });
       if (response.accessToken) {
         const { accessToken, roles } = response;
-        setAuth({ user, pwd, roles, accessToken });
+        setAuth({ user, roles, accessToken });
         setUser("");
         setPwd("");
         setSuccess(true);
@@ -61,7 +61,6 @@ function LogIn() {
   useEffect(() => {
     if (success) {
       setSuccess(false);
-      // window.location.href = "/";
       navigate("/");
     }
   }, [success]);

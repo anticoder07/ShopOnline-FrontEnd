@@ -29,10 +29,10 @@ export const addProductToBasket = async (i, q, t) => {
   }
 };
 
-export const deleteProductToBasket = async (i) => {
+export const deleteProductToBasket = async (id) => {
   try {
-    const res = await request.get("basket/delete", {
-      param: i,
+    const res = await request.get(`api/basket/delete`, {
+      params: { i: id },
       headers: authHeader(),
     });
     return res.data;

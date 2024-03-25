@@ -1,16 +1,29 @@
 import React, { useEffect, useState } from "react";
 import classNames from "classnames/bind";
+import { useLocation } from "react-router";
 
 import styles from "./Upload.module.scss";
 import images from "../../../assets/images";
 import Button from "../../../components/Button";
 import OptionsPopper from "./OptionsPopper";
-import { addProduct } from "../../../services/ChangeProductService";
+import {
+  addProduct,
+  changeProduct,
+} from "../../../services/ChangeProductService";
 import NotificationCheck from "../Notification/NotificationCheck";
+import { getProductId } from "../../../services/TakeProductService";
 
 const cx = classNames.bind(styles);
 
 function Upload() {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const isChange = location.pathname === "/chinh-sua-san-pham";
+  const id = queryParams.get("i");
+
+  const [inforProduct, setInfProduct] = useState([]);
+  const [attributes, setAttributes] = useState([]);
+
   const [image, setImage] = useState(null);
   const [productName, setProductName] = useState("");
   const [type, setType] = useState("");
@@ -41,7 +54,7 @@ function Upload() {
         productTypeItemDtoList: item.value.typeList.map((pti) => {
           return {
             id: 11,
-            picture: "",
+            picture: pti.icon.props.src,
             price: pti.total,
             quantity: pti.quantity,
             sold: 0,
@@ -53,18 +66,33 @@ function Upload() {
 
     try {
       const fetchApi = async () => {
-        const res = await addProduct({
-          id: 1,
-          picture: image,
-          name: productName,
-          sold: 0,
-          quantity: quantity,
-          type: type,
-          description: description,
-          state: true,
-          priceMin: price,
-          productTypeList: attribute,
-        });
+        if (isChange) {
+          const res = await changeProduct({
+            id: Number(id),
+            picture: image,
+            name: productName,
+            sold: 0,
+            quantity: quantity,
+            type: type,
+            description: description,
+            state: true,
+            priceMin: price,
+            productTypeList: attribute,
+          });
+        } else {
+          const res = await addProduct({
+            id: 1,
+            picture: image,
+            name: productName,
+            sold: 0,
+            quantity: quantity,
+            type: type,
+            description: description,
+            state: true,
+            priceMin: price,
+            productTypeList: attribute,
+          });
+        }
 
         setNotificationAddBasket(true);
       };
@@ -80,6 +108,41 @@ function Upload() {
       setNotificationAddBasket(false);
     }, 1500);
   }, [notificationAddBasket]);
+
+  useEffect(() => {
+    if (isChange) {
+      try {
+        const fetchApi = async () => {
+          const response = await getProductId(id);
+          console.log(response.productTypeList);
+
+          setInfProduct(response);
+          setImage(response.picture);
+          setQuantity(response.quantity);
+          setProductName(response.name);
+          setPrice(response.priceMin);
+          setDescription(response.description);
+          setType(response.type);
+
+          // response.productTypeList.map(() => {
+          //   setProductType((prev) => {
+          //     [...prev + {
+
+          //     }]
+          //   })
+          // });
+
+          if (response && response.productTypeList) {
+            setAttributes(response.productTypeList);
+          }
+        };
+
+        fetchApi();
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  }, []);
 
   return (
     <div className={cx("wrapper")}>
@@ -102,6 +165,7 @@ function Upload() {
         </div>
         <div className={cx("name")}>
           <input
+            value={productName}
             type="text"
             placeholder="Tên sản phẩm"
             className={cx("input-name")}
@@ -130,6 +194,7 @@ function Upload() {
               Có
             </label>
             <input
+              value={quantity}
               type="text"
               id="totalInput"
               name="totalInput"
@@ -145,6 +210,7 @@ function Upload() {
               Giá tiền
             </label>
             <input
+              value={price}
               type="text"
               name="totalInput"
               className={cx("totalInput")}
@@ -170,6 +236,7 @@ function Upload() {
           Chi tiết sản phẩm
         </h2>
         <textarea
+          value={description}
           rows={15}
           cols={65}
           style={{ fontSize: "18px" }}
@@ -184,7 +251,7 @@ function Upload() {
         style={{ fontSize: "20px", marginTop: "20px" }}
         onClick={handleSave}
       >
-        Thêm sản phẩm
+        {(!isChange && "Thêm sản phẩm") || "Lưu thay đổi"}
       </Button>
       <div className={cx("notification")}>
         {notificationAddBasket && (

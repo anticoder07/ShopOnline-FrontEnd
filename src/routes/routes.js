@@ -50,6 +50,11 @@ const publicRouter = [
   { path: "/gio-hang", component: Basket },
   { path: "/profile", component: Profile },
   { path: "/them-san-pham", component: Upload, layout: NoSearchHeaderLayout },
+  {
+    path: "/chinh-sua-san-pham",
+    component: Upload,
+    layout: NoSearchHeaderLayout,
+  },
   { path: `/?page=`, component: Home },
   { path: `/trang-chu`, component: Home },
   ...SIDEBAR_ITEMS.map((item) => ({

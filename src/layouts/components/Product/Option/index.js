@@ -35,6 +35,7 @@ function Option({
           )}
           <Button
             className={cx("button")}
+            style={item.active ? { border: "1px solid red" } : {}}
             leftIcon={item.icon}
             pitureType
             onClick={() => {

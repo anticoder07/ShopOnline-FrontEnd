@@ -7,6 +7,7 @@ import Search from "../Search";
 import Button from "../../../components/Button";
 import BillItem from "./BillItem";
 import { seeBill } from "../../../services/BillService";
+import { searchAllProductsBill } from "../../../services/SearchService";
 
 const cx = classNames.bind(styles);
 
@@ -62,6 +63,10 @@ function Bill() {
         <div className={cx("basket-header")}>{renderItem()}</div>
         <Search
           placeholder="Bạn có thể tìm kiếm theo tên sản phẩm hoặc ngày mua"
+          customSearchNotRender
+          activityNoValue={seeBill}
+          activity={(e) => searchAllProductsBill(e)}
+          handleSearchValue={(value) => setPage(value)}
           gray
         />
       </div>
@@ -117,7 +122,6 @@ function Bill() {
                           key={key}
                           // onClick={}
                           primary
-                          className={cx("state-btn")}
                         >
                           {stateBillMap[key]}
                         </Button>
