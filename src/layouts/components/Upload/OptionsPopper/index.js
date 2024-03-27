@@ -9,10 +9,37 @@ import Button from "../../../../components/Button";
 
 const cx = classNames.bind(styles);
 
-function OptionsPopper({ takeValue }) {
+function OptionsPopper({ takeValue, valueDefault }) {
   const [value, setValue] = useState([]);
   const [optionList, setOptionList] = useState([]);
   const [id, setId] = useState(0);
+
+  useEffect(() => {
+    if (
+      valueDefault &&
+      Array.isArray(valueDefault) &&
+      valueDefault.length > 0
+    ) {
+      const newOptionList = valueDefault.map((valueOptionPopper) => {
+        const optionPopperId = valueOptionPopper.id;
+        setId(optionPopperId);
+        const option = {
+          id: optionPopperId,
+          component: (
+            <ConfigOption
+              typeDefault={valueOptionPopper.type}
+              valueDefault={valueOptionPopper.productTypeItemDtoList}
+              onTypeListChange={(value) => {
+                handleSaveValue(value, optionPopperId);
+              }}
+            />
+          ),
+        };
+        return option;
+      });
+      setOptionList(newOptionList);
+    }
+  }, [valueDefault]);
 
   const handleSaveValue = (valueLocation, idLocation) => {
     setValue((prevValue) => {
@@ -26,19 +53,25 @@ function OptionsPopper({ takeValue }) {
   };
 
   const handelAddOption = () => {
+    const newId = id + 1;
+
     const option = {
-      id: id,
+      id: newId,
       component: (
         <ConfigOption
+          typeDefault={undefined}
+          valueDefault={[]}
           onTypeListChange={(value) => {
-            handleSaveValue(value, id);
+            handleSaveValue(value, newId);
           }}
         />
       ),
     };
+    setId(newId);
 
-    setId(id + 1);
-    setOptionList([...optionList, option]);
+    const updatedOptionList = [...optionList, option];
+
+    setOptionList(updatedOptionList);
   };
 
   const handleRemoveOption = (optionId) => {

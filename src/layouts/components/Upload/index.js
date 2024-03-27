@@ -48,13 +48,16 @@ function Upload() {
 
   const handleSave = () => {
     const attribute = productType.map((item) => {
+      console.log(item);
       return {
         id: 1,
         type: item.value.typeName,
         productTypeItemDtoList: item.value.typeList.map((pti) => {
+          let icon = "";
+          if (pti.icon) icon = pti.icon.props.src;
           return {
             id: 11,
-            picture: pti.icon.props.src,
+            picture: icon,
             price: pti.total,
             quantity: pti.quantity,
             sold: 0,
@@ -68,7 +71,7 @@ function Upload() {
       const fetchApi = async () => {
         if (isChange) {
           const res = await changeProduct({
-            id: Number(id),
+            id: id,
             picture: image,
             name: productName,
             sold: 0,
@@ -114,8 +117,6 @@ function Upload() {
       try {
         const fetchApi = async () => {
           const response = await getProductId(id);
-          console.log(response.productTypeList);
-
           setInfProduct(response);
           setImage(response.picture);
           setQuantity(response.quantity);
@@ -123,15 +124,6 @@ function Upload() {
           setPrice(response.priceMin);
           setDescription(response.description);
           setType(response.type);
-
-          // response.productTypeList.map(() => {
-          //   setProductType((prev) => {
-          //     [...prev + {
-
-          //     }]
-          //   })
-          // });
-
           if (response && response.productTypeList) {
             setAttributes(response.productTypeList);
           }
@@ -225,6 +217,7 @@ function Upload() {
 
       <div className={cx("option-popper")}>
         <OptionsPopper
+          valueDefault={attributes}
           takeValue={(value) => {
             setProductType(value);
           }}

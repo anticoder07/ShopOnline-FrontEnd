@@ -10,14 +10,35 @@ import Option from "../../Product/Option";
 
 const cx = classNames.bind(styles);
 
-function ConfigOption({ onTypeListChange }) {
+function ConfigOption({ onTypeListChange, valueDefault, typeDefault }) {
   const [image, setImage] = useState(null);
   const [typeName, setTypeName] = useState("");
   const [title, setTitle] = useState("");
   const [quantity, setQuantity] = useState(0);
-  const [total, setTotal] = useState(null);
+  const [total, setTotal] = useState(0);
   const [typeList, setTypeList] = useState([]);
   const [indexChange, setIndexChange] = useState(-1);
+
+  useEffect(() => {
+    setTypeName(typeDefault);
+    setTypeList((_prevTypeList) => {
+      const updatedList = [];
+      for (let configOptionItem of valueDefault) {
+        const iconLink = configOptionItem.picture;
+        const title = configOptionItem.content;
+        const quantity = configOptionItem.quantity;
+        const total = configOptionItem.price;
+        const icon = <Image src={iconLink} alt={title} squareTypeOption />;
+        updatedList.push({
+          icon: icon,
+          title: title,
+          quantity: quantity,
+          total: total,
+        });
+      }
+      return updatedList;
+    });
+  }, [valueDefault]);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -49,7 +70,7 @@ function ConfigOption({ onTypeListChange }) {
       setTypeList(updatedTypeList);
       setIndexChange(-1);
       setQuantity(0);
-      setTotal(null);
+      setTotal(0);
       setImage(null);
       setTitle("");
       return;
@@ -67,12 +88,13 @@ function ConfigOption({ onTypeListChange }) {
     setTypeList([...typeList, type]);
     setImage(null);
     setTitle("");
+    setTotal(0);
     setQuantity(0);
-    setTotal(null);
+    setTotal(0);
   };
 
   const handleDeleteOption = (index) => {
-    const updatedTypeList = typeList.filter((item, i) => i !== index);
+    const updatedTypeList = typeList.filter((_item, i) => i !== index);
     setTypeList(updatedTypeList);
   };
 
@@ -85,6 +107,8 @@ function ConfigOption({ onTypeListChange }) {
       setImage(value.item.icon.props.src);
     else setImage(null);
     setTitle(value.item.title);
+    setQuantity(value.item.quantity);
+    setTotal(value.item.total);
     setIndexChange(value.index);
   };
 
@@ -96,6 +120,7 @@ function ConfigOption({ onTypeListChange }) {
     <div className={cx("container")}>
       <div className={cx("wrapper")}>
         <input
+          value={typeName}
           placeholder="Tên kiểu"
           style={{ width: "80px", height: "30px" }}
           onChange={(e) => {
