@@ -38,38 +38,3 @@ body{
   text-rendering: optimizeSpeed;
 }
 
-.displayMobile{
-  display: none;
-}
-
-@media (max-width: 740px){
-  .nonDisplayMobile{
-    display: none;
-  }
-
-  .displayMobile{
-    display: block;
-  }
-
-  .gripMobile{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  :root{
-    --default-width-search: 70vw;
-  }
-}
-
-@media (min-width: 740px) and (max-width: 1023px) {
-  .displayMobile{
-    display: none;
-  }
-}
-
-@media (min-width: 1024px) and (max-width: 1239px) {
-  .displayMobile{
-    display: none;
-  }
-}

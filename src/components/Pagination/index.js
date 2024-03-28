@@ -17,6 +17,11 @@ function Pagination({ totalPages, getCurrentPage, className }) {
       return;
     }
     setCurrentPage(page);
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   };
 
   useEffect(() => {

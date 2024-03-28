@@ -207,7 +207,7 @@ function SignUp() {
 
             <div className={cx("form-group")}>
               <label htmlFor="dateOfBirth" className={cx("form-label")}>
-                Phone Number
+                Ngày sinh
               </label>
               <input
                 type="date"

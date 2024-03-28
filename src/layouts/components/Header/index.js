@@ -101,16 +101,6 @@ function Header({ visibleHeaderIndexing = true, visibleSearch = true }) {
     ));
   };
 
-  useEffect(() => {
-    try {
-      const fetchApi = async () => {
-        const res = await seeInformationHeader();
-        if (variable === null) {
-        }
-      };
-    } catch (e) {}
-  }, []);
-
   return (
     <header
       className={cx("wrapper", {
@@ -131,14 +121,6 @@ function Header({ visibleHeaderIndexing = true, visibleSearch = true }) {
             style={{ display: "flex", alignItems: "center", padding: "auto" }}
           >
             <Search handleSearchValue={undefined} />
-            <div
-              style={{ position: "relative", right: "10px" }}
-              className={cx("displayMobile")}
-            >
-              <Menu items={USER_ITEMS}>
-                <Image src={informationHeader.avatar} alt="avatar" avatar />
-              </Menu>
-            </div>
           </div>
         )}
 

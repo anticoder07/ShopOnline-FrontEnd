@@ -33,3 +33,12 @@ export const deleteProduct = async (i) => {
     console.log(error);
   }
 };
+
+export const recommendProduct = async () => {
+  try {
+    const res = await request.get(`api/take/product/recommend`);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};

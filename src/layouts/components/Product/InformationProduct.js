@@ -16,7 +16,10 @@ import { addProductToBasket } from "../../../services/BasketService";
 import NotificationCheck from "../Notification/NotificationCheck";
 import VarGlobal from "../../../Context/VarGlobalProvider";
 import AuthContext from "../../../Context/AuthProvider";
-import { deleteProduct } from "../../../services/ChangeProductService";
+import {
+  deleteProduct,
+  recommendProduct,
+} from "../../../services/ChangeProductService";
 
 const cx = classNames.bind(styles);
 
@@ -159,7 +162,17 @@ function InformationProduct() {
     return () => clearTimeout(timeout);
   }, [notificationAddBasket]);
 
-  const CARD_ITEMS = [];
+  const [CARD_ITEMS, SET_CARD_ITEMS] = useState([]);
+
+  useEffect(() => {
+    const fetchApi = async () => {
+      const res = await recommendProduct();
+      SET_CARD_ITEMS(res);
+      console.log(res);
+    };
+
+    fetchApi();
+  }, []);
 
   return (
     <>

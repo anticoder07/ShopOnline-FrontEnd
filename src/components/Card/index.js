@@ -8,10 +8,22 @@ import { NavLink } from "react-router-dom";
 const cx = classNames.bind(styles);
 
 function Card({ data }) {
+  const handleClick = (event) => {
+    event.preventDefault();
+
+    window.location.href = `/by/id?i=${data.id}`;
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
   return (
     <NavLink
       to={`/by/id?i=${data.id}`}
       className={cx("wrapper", "navlink-wrapper")}
+      onClick={handleClick}
     >
       <div className={cx("logo")}>
         <Image src={data.picture} alt="product" card />

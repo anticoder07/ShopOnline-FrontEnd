@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import Tippy from "@tippyjs/react";
 import classNames from "classnames/bind";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFileLines } from "@fortawesome/free-regular-svg-icons";
 import {
+  faFileLines,
   faCarSide,
   faCartShopping,
   faCheck,

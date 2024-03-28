@@ -70,7 +70,7 @@ function Search({
       render={(attrs) => (
         <div className={cx("search-result")} tabIndex="-1" {...attrs}>
           <Wrapper
-            children={searchResult.slice(0, 10).map((result) => (
+            children={searchResult.slice(0, 8).map((result) => (
               <SearchItem data={result} />
             ))}
             className={cx("wrapper-search")}

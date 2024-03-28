@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import classNames from "classnames/bind";
-
 import styles from "./purchaseOrder.module.scss";
 import BillItem from "../Bill/BillItem";
 import MenuItem from "../SideBar/Menu/MenuItem";
@@ -31,7 +30,7 @@ function PurchaseOrder() {
       to: "/van-chuyen",
     },
     COMPLETE: {
-      title: "Hoành thành",
+      title: "Hoàn thành",
       to: "/hoan-thanh",
     },
   };
@@ -60,14 +59,16 @@ function PurchaseOrder() {
     setProductCurrent(id);
   };
 
-  const handleUpdateStateProduct = (state) => {
+  const handleUpdateStateProduct = async (state) => {
     try {
-      const fetchApi = async () => {
-        const res = await setStateAdmin(productCurrent, state);
-        setPage(res);
-        console.log(res);
-      };
-      fetchApi();
+      const res = await setStateAdmin(productCurrent, state);
+      if (res) {
+        const updatedPage = page.map((item) =>
+          item.id === productCurrent ? { ...item, stateBill: state } : item
+        );
+        setPage(updatedPage);
+      }
+      setShowStateProduct(false); // Đóng modal sau khi cập nhật
     } catch (err) {
       console.log(err);
     }
@@ -144,7 +145,9 @@ function PurchaseOrder() {
                       item.stateBill === key && (
                         <Button
                           key={key}
-                          onClick={() => handleButtonClick(item.id)}
+                          onClick={() => {
+                            handleButtonClick(item.id);
+                          }}
                           primary
                           className={cx("state-btn")}
                         >
@@ -165,10 +168,12 @@ function PurchaseOrder() {
                 ></div>
                 <div className={cx("state")}>
                   <StateProduct
-                    visible={page[productCurrent].stateBill}
+                    visible={
+                      page.find((p) => p.id === productCurrent)?.stateBill
+                    }
                     value={(e) => {
                       setShowStateProduct(false);
-                      handleUpdateStateProduct(item.id, e);
+                      handleUpdateStateProduct(e);
                     }}
                   />
                 </div>
@@ -180,4 +185,5 @@ function PurchaseOrder() {
     </>
   );
 }
+
 export default PurchaseOrder;
