@@ -48,7 +48,6 @@ function Upload() {
 
   const handleSave = () => {
     const attribute = productType.map((item) => {
-      console.log(item);
       return {
         id: 1,
         type: item.value.typeName,

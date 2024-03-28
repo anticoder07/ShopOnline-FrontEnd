@@ -12,6 +12,7 @@ const cx = classNames.bind(styles);
 function OptionsPopper({ takeValue, valueDefault }) {
   const [value, setValue] = useState([]);
   const [optionList, setOptionList] = useState([]);
+  const [idList, setIdList] = useState([]);
   const [id, setId] = useState(0);
 
   useEffect(() => {
@@ -79,7 +80,15 @@ function OptionsPopper({ takeValue, valueDefault }) {
       (option) => option.id !== optionId
     );
     setOptionList(updatedOptionList);
+
+    setIdList((prev) => [...prev, optionId]);
   };
+
+  // useEffect(() => {
+  //   const updatedValueList = value.filter((item) => !idList.includes(item.id));
+  //   setValue(updatedValueList);
+  //   setValue(value.filter(value.id != idList));
+  // }, [idList]);
 
   const renderOption = () => {
     return optionList.map((option) => {
@@ -98,8 +107,12 @@ function OptionsPopper({ takeValue, valueDefault }) {
   };
 
   useEffect(() => {
-    takeValue(value.filter(Boolean));
-  }, [value]);
+    const updatedValueList = value
+      .filter(Boolean)
+      .filter((item) => !idList.includes(item.id));
+    console.log(updatedValueList);
+    takeValue(updatedValueList);
+  }, [idList, value]);
 
   return (
     <div className={cx("wrapper")}>

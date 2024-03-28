@@ -3,7 +3,6 @@ import authHeader from "./authHeader";
 
 export const changeProduct = async (product) => {
   try {
-    console.log(product);
     const res = await request.post("api/product/change", product, {
       headers: authHeader(),
     });
@@ -14,7 +13,6 @@ export const changeProduct = async (product) => {
 };
 
 export const addProduct = async (data) => {
-  console.log(data);
   try {
     const res = await request.post("api/product/add", data, {
       headers: authHeader(),
